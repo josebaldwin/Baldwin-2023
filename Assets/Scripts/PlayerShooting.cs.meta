@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+guid: 29bd0db4224dcb24c942a3f1be951d54
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - shootingParticlesPrefab: {fileID: 19800004, guid: 7686daa96d9e32c42a7fbd3f6b4e9463, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
