@@ -4,18 +4,29 @@ using UnityEngine;
 
 public class CollisionHandler : MonoBehaviour
 {
-    private bool hitByMissile = false;
+    public int maxResistance = 5; // Set the maximum resistance value
+    private int resistanceCounter = 0;
 
     void OnCollisionEnter(Collision collision)
     {
         // Check if the collision involves a Missile and hasn't been hit yet
         if (collision.gameObject.CompareTag("Missile"))
         {
-            // Destroy the missile immediately upon impact
-            Destroy(collision.gameObject);
+            if (resistanceCounter < maxResistance)
+            {
+                // Enemy is resistant, do not get affected
+                resistanceCounter++;
 
-            // Start a coroutine to destroy the enemy after a delay (e.g., 2 seconds)
-            StartCoroutine(DestroyAfterDelay(2f)); // Adjust the delay as needed
+                
+            }
+            else
+            {
+                // Destroy the missile immediately upon impact
+                Destroy(collision.gameObject);
+
+                // Start a coroutine to destroy the object after a delay (e.g., 2 seconds)
+                StartCoroutine(DestroyAfterDelay(2f)); // Adjust the delay as needed
+            }
         }
     }
 
