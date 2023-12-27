@@ -2,18 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyCollisionHandler : MonoBehaviour
+public class CollisionHandler : MonoBehaviour
 {
     private bool hitByMissile = false;
 
     void OnCollisionEnter(Collision collision)
     {
         // Check if the collision involves a Missile and hasn't been hit yet
-        if (collision.gameObject.CompareTag("Missile") && !hitByMissile)
+        if (collision.gameObject.CompareTag("Missile"))
         {
-            // Set the flag to true to avoid multiple hits
-            hitByMissile = true;
-
             // Destroy the missile immediately upon impact
             Destroy(collision.gameObject);
 
@@ -27,7 +24,7 @@ public class EnemyCollisionHandler : MonoBehaviour
         // Wait for the specified delay
         yield return new WaitForSeconds(delay);
 
-        // Destroy the enemy object
+        // Destroy the object this script is attached to (enemy or missile)
         Destroy(gameObject);
     }
 }

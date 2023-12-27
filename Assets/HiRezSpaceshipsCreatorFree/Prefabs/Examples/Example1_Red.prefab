@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4044696805220850}
   - component: {fileID: 5053185232668718733}
   - component: {fileID: 2599044175614505235}
-  - component: {fileID: -6074778143258533495}
+  - component: {fileID: 1034899597779987623}
   m_Layer: 0
   m_Name: Example1_Red
   m_TagString: Enemy
@@ -100,7 +100,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-6074778143258533495
+--- !u!114 &1034899597779987623
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -109,12 +109,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1040203764306136}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aba697b7bdf43d74986e2874f1ecf24d, type: 3}
+  m_Script: {fileID: 11500000, guid: 2fabd32e8011aba4591eec5ee4a70b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  explosionPrefab: {fileID: 183818, guid: 64d48cc8be380db4c9285fafe8c3c0a8, type: 3}
-  explosionDelay: 1
-  explosionScale: {x: 0.0002, y: 0.0002, z: 0.0002}
 --- !u!1001 &230221397368766817
 PrefabInstance:
   m_ObjectHideFlags: 0
