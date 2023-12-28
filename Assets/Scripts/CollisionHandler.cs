@@ -5,6 +5,13 @@ public class CollisionHandler : MonoBehaviour
 {
     public int maxResistance = 5; // Set the maximum resistance value
     private int resistanceCounter = 0;
+    private Rigidbody enemyRigidbody;
+
+    void Start()
+    {
+        // Get the reference to the Rigidbody component
+        enemyRigidbody = GetComponent<Rigidbody>();
+    }
 
     void OnCollisionEnter(Collision collision)
     {
@@ -24,6 +31,12 @@ public class CollisionHandler : MonoBehaviour
 
                 if (resistanceCounter >= maxResistance)
                 {
+                    // Set the enemy Rigidbody to be affected by physics forces
+                    if (enemyRigidbody != null)
+                    {
+                        enemyRigidbody.isKinematic = false;
+                    }
+
                     // Start a coroutine to destroy the object after a delay (e.g., 2 seconds)
                     StartCoroutine(DestroyAfterDelay(2f)); // Adjust the delay as needed
                 }
