@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4044696805220850}
   - component: {fileID: 5053185232668718733}
   - component: {fileID: 2599044175614505235}
-  - component: {fileID: 1034899597779987623}
+  - component: {fileID: -8823289605996180948}
   m_Layer: 0
   m_Name: Example1_Red
   m_TagString: Enemy
@@ -100,7 +100,7 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1034899597779987623
+--- !u!114 &-8823289605996180948
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
