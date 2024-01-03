@@ -13,11 +13,11 @@ public class PlayerShooting : MonoBehaviour
 
     void Update()
     {
-        // Check if enough time has passed since the last shot
-        if (Time.time > nextShootTime)
+        // Check if the shoot key is held down
+        if (Input.GetKey(shootKey))
         {
-            // Check for the shoot key input
-            if (Input.GetKeyDown(shootKey))
+            // Check if enough time has passed since the last shot
+            if (Time.time > nextShootTime)
             {
                 // Shoot the missile
                 ShootMissile();
@@ -32,6 +32,9 @@ public class PlayerShooting : MonoBehaviour
     {
         // Instantiate the Missile Prefab at the player's position without rotation
         GameObject missileInstance = Instantiate(missilePrefab, transform.position, Quaternion.identity);
+
+        // Set the layer of the missile to "Missile"
+        missileInstance.layer = LayerMask.NameToLayer("Missile");
 
         // Access the Collider of the missile and set it as not a trigger (assuming you're using a Collider)
         Collider missileCollider = missileInstance.GetComponent<Collider>();
