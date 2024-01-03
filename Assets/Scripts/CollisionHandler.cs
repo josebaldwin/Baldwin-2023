@@ -1,16 +1,18 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CollisionHandler : MonoBehaviour
 {
     public int maxResistance = 5; // Set the maximum resistance value
     private int resistanceCounter = 0;
-    private Rigidbody enemyRigidbody;
+    public Material glowMaterial; // Assign the glow material in the Inspector
+    private Renderer[] childRenderers;
 
     void Start()
     {
-        // Get the reference to the Rigidbody component
-        enemyRigidbody = GetComponent<Rigidbody>();
+        // Get all child renderers
+        childRenderers = GetComponentsInChildren<Renderer>();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -28,18 +30,28 @@ public class CollisionHandler : MonoBehaviour
 
                 // Optionally, you can play a sound or add other effects for resistant hits
                 Debug.Log("Missile collided with a resistant enemy!");
+            }
+            else
+            {
+                // Enable the glow effect on all child renderers
+                EnableGlowEffect();
 
-                if (resistanceCounter >= maxResistance)
-                {
-                    // Set the enemy Rigidbody to be affected by physics forces
-                    if (enemyRigidbody != null)
-                    {
-                        enemyRigidbody.isKinematic = false;
-                    }
+                // Start a coroutine to destroy the object after a delay (e.g., 2 seconds)
+                StartCoroutine(DestroyAfterDelay(2f)); // Adjust the delay as needed
+            }
+        }
+    }
 
-                    // Start a coroutine to destroy the object after a delay (e.g., 2 seconds)
-                    StartCoroutine(DestroyAfterDelay(2f)); // Adjust the delay as needed
-                }
+    void EnableGlowEffect()
+    {
+        // Check if the enemy has child renderers and a glow material
+        if (childRenderers != null && glowMaterial != null)
+        {
+            foreach (Renderer childRenderer in childRenderers)
+            {
+                // Enable emission on the glow material for each child renderer
+                glowMaterial.EnableKeyword("_EMISSION");
+                childRenderer.material = glowMaterial;
             }
         }
     }

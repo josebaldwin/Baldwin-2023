@@ -116,6 +116,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxResistance: 5
+  glowMaterial: {fileID: 2100000, guid: abb90177e642d5542bd72a77d5aabba7, type: 2}
 --- !u!1001 &54725879604700726
 PrefabInstance:
   m_ObjectHideFlags: 0
