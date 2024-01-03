@@ -8,6 +8,7 @@ public class CollisionHandler : MonoBehaviour
     private int resistanceCounter = 0;
     public Material glowMaterial; // Assign the glow material in the Inspector
     private Renderer[] childRenderers;
+    public float glowDuration = 0.5f; // Adjust the glow duration
 
     void Start()
     {
@@ -33,13 +34,25 @@ public class CollisionHandler : MonoBehaviour
             }
             else
             {
-                // Enable the glow effect on all child renderers
-                EnableGlowEffect();
+                // Start the coroutine to enable and disable the glow effect
+                StartCoroutine(GlowEffectCoroutine());
 
                 // Start a coroutine to destroy the object after a delay (e.g., 2 seconds)
                 StartCoroutine(DestroyAfterDelay(2f)); // Adjust the delay as needed
             }
         }
+    }
+
+    IEnumerator GlowEffectCoroutine()
+    {
+        // Enable the glow effect on all child renderers
+        EnableGlowEffect();
+
+        // Wait for the specified glow duration
+        yield return new WaitForSeconds(glowDuration);
+
+        // Disable the glow effect on all child renderers
+        DisableGlowEffect();
     }
 
     void EnableGlowEffect()
@@ -52,6 +65,19 @@ public class CollisionHandler : MonoBehaviour
                 // Enable emission on the glow material for each child renderer
                 glowMaterial.EnableKeyword("_EMISSION");
                 childRenderer.material = glowMaterial;
+            }
+        }
+    }
+
+    void DisableGlowEffect()
+    {
+        // Check if the enemy has child renderers
+        if (childRenderers != null)
+        {
+            foreach (Renderer childRenderer in childRenderers)
+            {
+                // Disable emission on the material for each child renderer
+                childRenderer.material.DisableKeyword("_EMISSION");
             }
         }
     }
