@@ -24,6 +24,9 @@ public class CollisionHandler : MonoBehaviour
             // Destroy the missile immediately upon impact
             Destroy(collision.gameObject);
 
+            // Start the coroutine to enable and disable the glow effect
+            StartCoroutine(GlowEffectCoroutine());
+
             if (resistanceCounter < maxResistance)
             {
                 // Enemy is resistant, do not get affected
@@ -34,9 +37,6 @@ public class CollisionHandler : MonoBehaviour
             }
             else
             {
-                // Start the coroutine to enable and disable the glow effect
-                StartCoroutine(GlowEffectCoroutine());
-
                 // Start a coroutine to destroy the object after a delay (e.g., 2 seconds)
                 StartCoroutine(DestroyAfterDelay(2f)); // Adjust the delay as needed
             }

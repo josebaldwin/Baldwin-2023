@@ -116,7 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fabd32e8011aba4591eec5ee4a70b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxResistance: 5
+  maxResistance: 15
   glowMaterial: {fileID: 2100000, guid: abb90177e642d5542bd72a77d5aabba7, type: 2}
   glowDuration: 0.01
 --- !u!1001 &1766851629908762277
