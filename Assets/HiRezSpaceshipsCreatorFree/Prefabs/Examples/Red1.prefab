@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4596274262487186301}
   - component: {fileID: -122724425933744599}
   m_Layer: 0
-  m_Name: Example3_Red
+  m_Name: Red1
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,7 +107,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2fabd32e8011aba4591eec5ee4a70b58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxResistance: 25
+  maxResistance: 15
   glowMaterial: {fileID: 2100000, guid: 5b6f942c7fb685c41bca07e0effc9d21, type: 2}
   glowDuration: 0.01
 --- !u!1001 &525535550420314446
