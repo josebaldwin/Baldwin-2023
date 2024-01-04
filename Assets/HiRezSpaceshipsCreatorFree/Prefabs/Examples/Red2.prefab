@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5053185232668718733}
   - component: {fileID: 2599044175614505235}
   - component: {fileID: -8823289605996180948}
+  - component: {fileID: 2343699822233974740}
   m_Layer: 0
   m_Name: Red2
   m_TagString: Enemy
@@ -115,6 +116,22 @@ MonoBehaviour:
   maxResistance: 20
   glowMaterial: {fileID: 2100000, guid: 5b6f942c7fb685c41bca07e0effc9d21, type: 2}
   glowDuration: 0.01
+--- !u!114 &2343699822233974740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1040203764306136}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6d29c9ebef08f345944f938bf9d3741, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minX: -20
+  maxX: 20
+  minY: -6
+  maxY: 8
 --- !u!1001 &230221397368766817
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: -4260886317531064941}
   - component: {fileID: -8547175702739320008}
   - component: {fileID: -833808419910603380}
+  - component: {fileID: -5201776748716959950}
   m_Layer: 0
   m_Name: Grey3
   m_TagString: Enemy
@@ -119,6 +120,22 @@ MonoBehaviour:
   maxResistance: 7
   glowMaterial: {fileID: 2100000, guid: abb90177e642d5542bd72a77d5aabba7, type: 2}
   glowDuration: 0.01
+--- !u!114 &-5201776748716959950
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5749897140314435938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6d29c9ebef08f345944f938bf9d3741, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minX: -20
+  maxX: 20
+  minY: -6
+  maxY: 8
 --- !u!1001 &1766851629908762277
 PrefabInstance:
   m_ObjectHideFlags: 0
