@@ -9,19 +9,14 @@ public class CollisionHandler : MonoBehaviour
     public Material glowMaterial;
     private Renderer[] childRenderers;
     public float glowDuration = 0.5f;
-    private ParticleControl particleControl;
+ 
 
     void Start()
     {
         enemyRigidbody = GetComponent<Rigidbody>();
         childRenderers = GetComponentsInChildren<Renderer>();
 
-        // Add the ParticleControl script to the same GameObject if not present
-        particleControl = GetComponent<ParticleControl>();
-        if (particleControl == null)
-        {
-            particleControl = gameObject.AddComponent<ParticleControl>();
-        }
+        
     }
 
     void OnCollisionEnter(Collision collision)
@@ -40,8 +35,6 @@ public class CollisionHandler : MonoBehaviour
                     enemyRigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
                 }
 
-                // Restart particle emission after 2 seconds
-                particleControl.RestartParticleEmission(2f);
             }
             else
             {
