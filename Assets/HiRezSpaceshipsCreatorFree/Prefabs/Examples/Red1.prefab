@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4596274262487186301}
   - component: {fileID: -122724425933744599}
   - component: {fileID: 3214281704163048809}
+  - component: {fileID: -2844797658755117808}
   m_Layer: 0
   m_Name: Red1
   m_TagString: Enemy
@@ -127,6 +128,19 @@ MonoBehaviour:
   maxX: 20
   minY: -6
   maxY: 8
+--- !u!114 &-2844797658755117808
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5376501628273953719}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adfb58d708da7d148bbfc466b9673f5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  explosionParticlePrefab: {fileID: 4468956407509917395, guid: 2de9ab8b64600fa4180d4a1b89e58a31, type: 3}
 --- !u!1001 &525535550420314446
 PrefabInstance:
   m_ObjectHideFlags: 0
