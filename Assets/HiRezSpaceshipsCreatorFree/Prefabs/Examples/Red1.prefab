@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 4596274262487186301}
   - component: {fileID: -122724425933744599}
   - component: {fileID: 3214281704163048809}
-  - component: {fileID: 8197313620043476915}
   m_Layer: 0
   m_Name: Red1
   m_TagString: Enemy
@@ -128,18 +127,6 @@ MonoBehaviour:
   maxX: 20
   minY: -6
   maxY: 8
---- !u!114 &8197313620043476915
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5376501628273953719}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42df5cf5cf565144c97c0d0eccd04e2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &525535550420314446
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -241,6 +228,10 @@ PrefabInstance:
     - target: {fileID: 3734861025790442322, guid: 303fe98f532f0e94ab2a1b933ee2528f, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734861025790442322, guid: 303fe98f532f0e94ab2a1b933ee2528f, type: 3}
+      propertyPath: m_TagString
+      value: JetEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3734861025790442323, guid: 303fe98f532f0e94ab2a1b933ee2528f, type: 3}
       propertyPath: m_LocalScale.x
@@ -397,6 +388,10 @@ PrefabInstance:
     - target: {fileID: 3734861025790442322, guid: 303fe98f532f0e94ab2a1b933ee2528f, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734861025790442322, guid: 303fe98f532f0e94ab2a1b933ee2528f, type: 3}
+      propertyPath: m_TagString
+      value: JetEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3734861025790442323, guid: 303fe98f532f0e94ab2a1b933ee2528f, type: 3}
       propertyPath: m_LocalPosition.x

@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: -1671523629493238316}
   - component: {fileID: -2887526065176339206}
   - component: {fileID: 4729320502678793900}
-  - component: {fileID: -8748020019528240785}
   m_Layer: 0
   m_Name: Grey4
   m_TagString: Enemy
@@ -136,18 +135,6 @@ MonoBehaviour:
   maxX: 20
   minY: -6
   maxY: 8
---- !u!114 &-8748020019528240785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8112921285308865003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42df5cf5cf565144c97c0d0eccd04e2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &54725879604700726
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -307,6 +294,10 @@ PrefabInstance:
     - target: {fileID: 8002839332627491315, guid: 54cd1d70dbdbe014ebf7a09f38613713, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 8002839332627491315, guid: 54cd1d70dbdbe014ebf7a09f38613713, type: 3}
+      propertyPath: m_TagString
+      value: JetEngine
       objectReference: {fileID: 0}
     - target: {fileID: 8002839332627491324, guid: 54cd1d70dbdbe014ebf7a09f38613713, type: 3}
       propertyPath: m_LocalScale.x

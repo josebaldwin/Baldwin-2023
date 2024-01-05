@@ -21,7 +21,7 @@ public class EnemySpawner : MonoBehaviour
         float randomY = Random.Range(-3.5f, 5.5f);
 
         // Set the desired position and rotation values
-        Vector3 spawnPosition = new Vector3(14f, randomY, 0f);
+        Vector3 spawnPosition = new Vector3(20f, randomY, 0f);
         Quaternion spawnRotation = Quaternion.Euler(0f, -90f, 90f);
 
         // Randomly choose one of the enemy prefabs from the array

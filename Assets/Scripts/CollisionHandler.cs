@@ -57,14 +57,22 @@ public class CollisionHandler : MonoBehaviour
 
     void ActivateGlowEffect()
     {
+        // Check if the enemy has child renderers and a glow material
         if (childRenderers != null && glowMaterial != null)
         {
+            // Enable the glow effect on child renderers that don't have the "JetEngine" tag
             foreach (Renderer childRenderer in childRenderers)
             {
-                glowMaterial.EnableKeyword("_EMISSION");
-                childRenderer.material = glowMaterial;
+                // Check if the current child has the "JetEngine" tag
+                if (!childRenderer.CompareTag("JetEngine"))
+                {
+                    // Enable emission on the glow material for each child renderer
+                    glowMaterial.EnableKeyword("_EMISSION");
+                    childRenderer.material = glowMaterial;
+                }
             }
 
+            // Start the coroutine to disable the glow effect after a specified duration
             StartCoroutine(DisableGlowEffectAfterDelay(glowDuration));
         }
     }

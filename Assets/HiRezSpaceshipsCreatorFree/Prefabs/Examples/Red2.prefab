@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2599044175614505235}
   - component: {fileID: -8823289605996180948}
   - component: {fileID: 2343699822233974740}
-  - component: {fileID: -7872125936729390940}
   m_Layer: 0
   m_Name: Red2
   m_TagString: Enemy
@@ -133,18 +132,6 @@ MonoBehaviour:
   maxX: 20
   minY: -6
   maxY: 8
---- !u!114 &-7872125936729390940
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1040203764306136}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42df5cf5cf565144c97c0d0eccd04e2a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &230221397368766817
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -721,6 +708,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 3734861025790442322, guid: 303fe98f532f0e94ab2a1b933ee2528f, type: 3}
+      propertyPath: m_TagString
+      value: JetEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3734861025790442323, guid: 303fe98f532f0e94ab2a1b933ee2528f, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.019999998
@@ -954,6 +945,10 @@ PrefabInstance:
     - target: {fileID: 3734861025790442322, guid: 303fe98f532f0e94ab2a1b933ee2528f, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 3734861025790442322, guid: 303fe98f532f0e94ab2a1b933ee2528f, type: 3}
+      propertyPath: m_TagString
+      value: JetEngine
       objectReference: {fileID: 0}
     - target: {fileID: 3734861025790442323, guid: 303fe98f532f0e94ab2a1b933ee2528f, type: 3}
       propertyPath: m_LocalScale.x
