@@ -7,7 +7,9 @@ public class EnemySpawner : MonoBehaviour
     public GameObject[] enemyPrefabs; // Array of enemy prefabs
     public float spawnInterval = 3f;
     public float spawnRadius = 10f;
-    public float enemySpeed = 5f; // Adjust this to set the enemy movement speed
+    public float enemySpeed = 5f; // Enemy movement speed
+    public float minY = -5f; // Min Y position for spawning
+    public float maxY = 5f; // Max Y position for spawning
 
     private void Start()
     {
@@ -15,10 +17,17 @@ public class EnemySpawner : MonoBehaviour
         InvokeRepeating("SpawnEnemy", 0f, spawnInterval);
     }
 
+    private void Update()
+    {
+        // Fix the Z position to 0
+        Vector3 fixedPosition = new Vector3(transform.position.x, transform.position.y, 0);
+        transform.position = fixedPosition;
+    }
+
     private void SpawnEnemy()
     {
         // Calculate a random y position within the specified range
-        float randomY = Random.Range(-3.5f, 5.5f);
+        float randomY = Random.Range(minY, maxY);
 
         // Set the desired position and rotation values
         Vector3 spawnPosition = new Vector3(20f, randomY, 0f);
@@ -37,5 +46,4 @@ public class EnemySpawner : MonoBehaviour
             enemyRigidbody.velocity = new Vector3(-enemySpeed, 0f, 0f);
         }
     }
-
 }
