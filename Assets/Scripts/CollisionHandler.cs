@@ -9,14 +9,11 @@ public class CollisionHandler : MonoBehaviour
     public Material glowMaterial;
     private Renderer[] childRenderers;
     public float glowDuration = 0.5f;
- 
 
     void Start()
     {
         enemyRigidbody = GetComponent<Rigidbody>();
         childRenderers = GetComponentsInChildren<Renderer>();
-
-        
     }
 
     void OnCollisionEnter(Collision collision)
@@ -24,7 +21,6 @@ public class CollisionHandler : MonoBehaviour
         if (collision.gameObject.CompareTag("Missile"))
         {
             Destroy(collision.gameObject);
-
             ActivateGlowEffect();
 
             if (resistanceCounter < maxResistance)
@@ -34,15 +30,18 @@ public class CollisionHandler : MonoBehaviour
                 {
                     enemyRigidbody.constraints = RigidbodyConstraints.FreezePositionZ;
                 }
-
             }
             else
             {
-                StartCoroutine(DestroyAfterDelay(2f));
-
-                if (enemyRigidbody != null)
+                // Call the OnKill method from the EnemyExplosion script
+                EnemyExplosion explosionScript = GetComponent<EnemyExplosion>();
+                if (explosionScript != null)
                 {
-                    enemyRigidbody.isKinematic = false;
+                    explosionScript.OnKill();
+                }
+                else
+                {
+                    Debug.LogError("EnemyExplosion script not found on " + gameObject.name);
                 }
             }
         }
