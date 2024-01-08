@@ -10,6 +10,7 @@ public class EnemySpawner : MonoBehaviour
     public float enemySpeed = 5f; // Enemy movement speed
     public float minY = -5f; // Min Y position for spawning
     public float maxY = 5f; // Max Y position for spawning
+    
 
     private void Start()
     {
@@ -17,13 +18,7 @@ public class EnemySpawner : MonoBehaviour
         InvokeRepeating("SpawnEnemy", 0f, spawnInterval);
     }
 
-    private void Update()
-    {
-        // Fix the Z position to 0
-        Vector3 fixedPosition = new Vector3(transform.position.x, transform.position.y, 0);
-        transform.position = fixedPosition;
-    }
-
+   
     private void SpawnEnemy()
     {
         // Calculate a random y position within the specified range

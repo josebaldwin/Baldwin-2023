@@ -126,8 +126,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   minX: -20
   maxX: 20
-  minY: -6
-  maxY: 8
+  minY: -3.5
+  maxY: 5
 --- !u!114 &-2844797658755117808
 MonoBehaviour:
   m_ObjectHideFlags: 0
