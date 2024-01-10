@@ -34,11 +34,15 @@ public class EnemySpawner : MonoBehaviour
         // Instantiate the selected enemy prefab at the specified position and rotation
         GameObject enemyInstance = Instantiate(selectedEnemyPrefab, spawnPosition, spawnRotation);
 
-        // Set the constant velocity along the X-axis for the enemy
-        Rigidbody enemyRigidbody = enemyInstance.GetComponent<Rigidbody>();
-        if (enemyRigidbody != null)
+        // Use the speed defined in the enemy's own EnemyBehavior script
+        EnemyBehavior enemyBehavior = enemyInstance.GetComponent<EnemyBehavior>();
+        if (enemyBehavior != null)
         {
-            enemyRigidbody.velocity = new Vector3(-enemySpeed, 0f, 0f);
+            Rigidbody enemyRigidbody = enemyInstance.GetComponent<Rigidbody>();
+            if (enemyRigidbody != null)
+            {
+                enemyRigidbody.velocity = new Vector3(-enemyBehavior.speed, 0f, 0f);
+            }
         }
     }
 }

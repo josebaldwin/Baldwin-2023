@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: -2887526065176339206}
   - component: {fileID: 4729320502678793900}
   - component: {fileID: 192710866435622433}
+  - component: {fileID: -5058696502916856745}
   m_Layer: 0
   m_Name: Grey4
   m_TagString: Enemy
@@ -150,6 +151,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionParticlePrefab: {fileID: 4468956407509917395, guid: 2de9ab8b64600fa4180d4a1b89e58a31, type: 3}
+--- !u!114 &-5058696502916856745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8112921285308865003}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a7950b3bf3e4f64a8c34475783b025c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 12
 --- !u!1001 &54725879604700726
 PrefabInstance:
   m_ObjectHideFlags: 0
