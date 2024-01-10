@@ -133,11 +133,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a6d29c9ebef08f345944f938bf9d3741, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minX: -20
-  maxX: 20
-  minY: -3.5
-  maxY: 5
-  missileBoundaryX: 16
+  minX: -60
+  maxX: 60
+  minY: -12
+  maxY: 14
+  missileBoundaryX: 42
 --- !u!114 &192710866435622433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -163,7 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a7950b3bf3e4f64a8c34475783b025c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 12
+  correctionSpeed: 25
+  speed: 15
 --- !u!1001 &54725879604700726
 PrefabInstance:
   m_ObjectHideFlags: 0
