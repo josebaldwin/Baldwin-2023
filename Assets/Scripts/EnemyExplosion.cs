@@ -5,6 +5,18 @@ public class EnemyExplosion : MonoBehaviour
 {
     public GameObject explosionParticlePrefab; // Assign in Inspector
 
+    // Method to be called when resistance is depleted
+    public void StartDestructionSequence()
+    {
+        StartCoroutine(DelayedOnKill(2f)); // Wait for 3 seconds before calling OnKill
+    }
+
+    private IEnumerator DelayedOnKill(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        OnKill();
+    }
+
     public void OnKill()
     {
         PlayExplosionParticle();
