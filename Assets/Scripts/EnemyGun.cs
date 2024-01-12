@@ -8,11 +8,12 @@ public class EnemyGun : MonoBehaviour
     public float additionalMissileSpeed = 5f; // Additional speed to add to the missile
     private float nextFireTime;
     private float enemySpeed; // Speed of the enemy
+    private EnemyBehavior enemyBehavior; // Reference to the EnemyBehavior script
 
     void Start()
     {
         nextFireTime = Time.time + fireRate;
-        EnemyBehavior enemyBehavior = GetComponentInParent<EnemyBehavior>();
+        enemyBehavior = GetComponentInParent<EnemyBehavior>();
         if (enemyBehavior != null)
         {
             enemySpeed = enemyBehavior.speed; // Get the speed of the enemy
@@ -25,7 +26,7 @@ public class EnemyGun : MonoBehaviour
 
     void Update()
     {
-        if (Time.time >= nextFireTime)
+        if (Time.time >= nextFireTime && !enemyBehavior.isResistanceDepleted)
         {
             FireMissile();
             nextFireTime = Time.time + fireRate;

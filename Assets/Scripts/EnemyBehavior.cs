@@ -8,7 +8,7 @@ public class EnemyBehavior : MonoBehaviour
     public float speed = 5f; // Speed set in Unity Inspector
     private float fixedZPosition = 0f; // The Z position you want to fix the enemies at
     private Rigidbody enemyRigidbody;
-    private bool isResistanceDepleted = false; // Flag to track if resistance is depleted
+    public bool isResistanceDepleted = false; // Flag to track if resistance is depleted
 
     void Start()
     {

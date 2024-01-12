@@ -1,80 +1,85 @@
 using UnityEngine;
-using System.Collections.Generic;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int maxHits = 10; // Number of hits the player can resist
+    public int maxHits = 10; // Maximum number of hits before the player is destroyed
     private int currentHits;
     public Material glowMaterial; // Assign a glow material in the inspector
-    private Dictionary<Renderer, Material[]> originalMaterials;
+    public GameObject explosionParticlePrefab; // Assign the explosion particle prefab in the inspector
+    private Renderer[] playerRenderers;
     public float glowDuration = 0.5f; // Duration of the glow effect
-    private bool isGlowing = false; // To track if the glow effect is active
+    private Material[] originalMaterials; // To store original materials of the player
 
     void Start()
     {
         currentHits = 0;
-        originalMaterials = new Dictionary<Renderer, Material[]>();
+        playerRenderers = GetComponentsInChildren<Renderer>();
         StoreOriginalMaterials();
     }
 
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("EnemyMissile"))
+        if (collision.gameObject.CompareTag("EnemyMissile") || collision.gameObject.CompareTag("Enemy"))
         {
-            Destroy(collision.gameObject); // Destroy the enemy missile
-
             currentHits++;
+            ActivateGlowEffect();
+
             if (currentHits >= maxHits)
             {
-                DestroyPlayer();
-            }
-            else if (!isGlowing)
-            {
-                ActivateGlowEffect();
+                OnKill();
             }
         }
     }
 
     void StoreOriginalMaterials()
     {
-        Renderer[] renderers = GetComponentsInChildren<Renderer>();
-        foreach (Renderer renderer in renderers)
+        foreach (Renderer renderer in playerRenderers)
         {
             if (renderer.gameObject.layer != LayerMask.NameToLayer("PlayerEngine"))
             {
-                originalMaterials[renderer] = renderer.materials;
+                originalMaterials = renderer.materials;
             }
         }
     }
 
     void ActivateGlowEffect()
     {
-        isGlowing = true;
-        foreach (var kvp in originalMaterials)
+        foreach (Renderer renderer in playerRenderers)
         {
-            Material[] glowMaterials = new Material[kvp.Value.Length];
-            for (int i = 0; i < glowMaterials.Length; i++)
+            if (renderer.gameObject.layer != LayerMask.NameToLayer("PlayerEngine"))
             {
-                glowMaterials[i] = glowMaterial;
+                Material[] glowMaterials = new Material[renderer.materials.Length];
+                for (int i = 0; i < glowMaterials.Length; i++)
+                {
+                    glowMaterials[i] = glowMaterial;
+                }
+                renderer.materials = glowMaterials;
             }
-            kvp.Key.materials = glowMaterials;
         }
 
-        Invoke("ResetGlowEffect", glowDuration);
+        Invoke(nameof(ResetGlowEffect), glowDuration);
     }
 
     void ResetGlowEffect()
     {
-        foreach (var kvp in originalMaterials)
+        foreach (Renderer renderer in playerRenderers)
         {
-            kvp.Key.materials = kvp.Value;
+            if (renderer.gameObject.layer != LayerMask.NameToLayer("PlayerEngine"))
+            {
+                renderer.materials = originalMaterials;
+            }
         }
-        isGlowing = false;
     }
 
-    void DestroyPlayer()
+    void OnKill()
     {
-        // Add any additional destruction logic here (like explosion effect)
+        // Play the explosion particle effect
+        if (explosionParticlePrefab != null)
+        {
+            Instantiate(explosionParticlePrefab, transform.position, Quaternion.identity);
+        }
+
+        // Destroy the player GameObject
         Destroy(gameObject);
     }
 }

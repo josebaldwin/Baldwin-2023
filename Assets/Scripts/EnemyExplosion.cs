@@ -1,9 +1,11 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class EnemyExplosion : MonoBehaviour
 {
     public GameObject explosionParticlePrefab; // Assign in Inspector
+    public event Action OnKill; // Event to be called when the enemy is killed
 
     // Method to be called when resistance is depleted
     public void StartDestructionSequence()
@@ -14,11 +16,12 @@ public class EnemyExplosion : MonoBehaviour
     private IEnumerator DelayedOnKill(float delay)
     {
         yield return new WaitForSeconds(delay);
-        OnKill();
+        OnKillMethod();
     }
 
-    public void OnKill()
+    public void OnKillMethod()
     {
+        OnKill?.Invoke(); // Invoke the OnKill event
         PlayExplosionParticle();
         Destroy(gameObject); // Destroy the enemy GameObject
     }
