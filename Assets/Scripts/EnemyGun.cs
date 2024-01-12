@@ -1,20 +1,30 @@
 using UnityEngine;
+using System.Collections;
 
 public class EnemyGun : MonoBehaviour
 {
     public GameObject missilePrefab; // Assign the missile prefab in the inspector
     public float fireRate = 2f; // Time between shots, set in the inspector
-    public float missileSpeed = 10f; // Speed of the missile
+    public float additionalMissileSpeed = 5f; // Additional speed to add to the missile
     private float nextFireTime;
+    private float enemySpeed; // Speed of the enemy
 
     void Start()
     {
         nextFireTime = Time.time + fireRate;
+        EnemyBehavior enemyBehavior = GetComponentInParent<EnemyBehavior>();
+        if (enemyBehavior != null)
+        {
+            enemySpeed = enemyBehavior.speed; // Get the speed of the enemy
+        }
+        else
+        {
+            Debug.LogError("Enemy behavior script not found on " + gameObject.name);
+        }
     }
 
     void Update()
     {
-        // Check if it's time to fire
         if (Time.time >= nextFireTime)
         {
             FireMissile();
@@ -26,24 +36,33 @@ public class EnemyGun : MonoBehaviour
     {
         if (missilePrefab != null)
         {
-            // Instantiate the missile
             GameObject missile = Instantiate(missilePrefab, transform.position, Quaternion.identity);
 
-            // Set the missile's velocity
             Rigidbody rb = missile.GetComponent<Rigidbody>();
             if (rb != null)
             {
-                Vector3 velocityDirection = Vector3.left; // This ensures the missile moves leftwards along the X-axis
+                Vector3 velocityDirection = Vector3.left; // Assumes missile moves leftwards along the X-axis
+                rb.velocity = velocityDirection * (enemySpeed + additionalMissileSpeed);
 
-                // Correct the Z position of the missile to remain at 0
-                missile.transform.position = new Vector3(missile.transform.position.x, missile.transform.position.y, 0f);
-
-                rb.velocity = velocityDirection * missileSpeed;
+                // Start correcting the missile's Z position
+                StartCoroutine(CorrectMissileZPosition(missile));
             }
         }
         else
         {
             Debug.LogError("Missile prefab not assigned for " + gameObject.name);
+        }
+    }
+
+    IEnumerator CorrectMissileZPosition(GameObject missile)
+    {
+        float correctionSpeed = 5f; // Adjust this value as needed
+
+        while (missile != null && Mathf.Abs(missile.transform.position.z) > Mathf.Epsilon)
+        {
+            float correctedZ = Mathf.Lerp(missile.transform.position.z, 0, correctionSpeed * Time.deltaTime);
+            missile.transform.position = new Vector3(missile.transform.position.x, missile.transform.position.y, correctedZ);
+            yield return null;
         }
     }
 }

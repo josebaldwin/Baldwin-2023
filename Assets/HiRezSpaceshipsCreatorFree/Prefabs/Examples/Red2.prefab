@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 2343699822233974740}
   - component: {fileID: 6833215150299078336}
   - component: {fileID: 5692849037116387219}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Red2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -1249,14 +1249,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1718390857548102, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8876822052207880720}
+      addedObject: {fileID: 1313289382858796291}
   m_SourcePrefab: {fileID: 100100000, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
 --- !u!1 &6983230938425586279 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1718390857548102, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
   m_PrefabInstance: {fileID: 6984926153236132641}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8876822052207880720
+--- !u!114 &1313289382858796291
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1270,7 +1270,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missilePrefab: {fileID: 6708268864625220635, guid: af5fc0bc38ede7e44af2b87f8ebd50b4, type: 3}
   fireRate: 2
-  missileSpeed: 30
+  missileSpeed: 10
 --- !u!4 &6989138853946127019 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4813205879603594, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
@@ -1411,7 +1411,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1718390857548102, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2580279945670800107}
+      addedObject: {fileID: 1249531339397038212}
   m_SourcePrefab: {fileID: 100100000, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
 --- !u!4 &8072358561008119405 stripped
 Transform:
@@ -1423,7 +1423,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1718390857548102, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
   m_PrefabInstance: {fileID: 8077169382638727143}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2580279945670800107
+--- !u!114 &1249531339397038212
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1437,7 +1437,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missilePrefab: {fileID: 6708268864625220635, guid: af5fc0bc38ede7e44af2b87f8ebd50b4, type: 3}
   fireRate: 2
-  missileSpeed: 30
+  missileSpeed: 10
 --- !u!1001 &8333167871101315401
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -5201776748716959950}
   - component: {fileID: -1118170905357036174}
   - component: {fileID: 5674631314635152844}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Grey3
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -523,8 +523,31 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1718390857548102, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1396976947598745104}
   m_SourcePrefab: {fileID: 100100000, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
+--- !u!1 &5750434964282866358 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1718390857548102, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
+  m_PrefabInstance: {fileID: 5749897139966098416}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1396976947598745104
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5750434964282866358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0862fef04c7beb468615af3d48d9705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missilePrefab: {fileID: 6708268864625220635, guid: af5fc0bc38ede7e44af2b87f8ebd50b4, type: 3}
+  fireRate: 2
+  missileSpeed: 10
 --- !u!4 &5754093347934960250 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4813205879603594, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
@@ -1013,14 +1036,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1718390857548102, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 331363645180093502}
+      addedObject: {fileID: 4882513708407395055}
   m_SourcePrefab: {fileID: 100100000, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
 --- !u!1 &5750434965200116889 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1718390857548102, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
   m_PrefabInstance: {fileID: 5749897140593450463}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &331363645180093502
+--- !u!114 &4882513708407395055
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1034,7 +1057,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missilePrefab: {fileID: 6708268864625220635, guid: af5fc0bc38ede7e44af2b87f8ebd50b4, type: 3}
   fireRate: 2
-  missileSpeed: 30
+  missileSpeed: 10
 --- !u!4 &5754093348112833621 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4813205879603594, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
@@ -1149,8 +1172,31 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1718390857548102, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1943036875142019189}
   m_SourcePrefab: {fileID: 100100000, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
+--- !u!1 &5750434965464088398 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1718390857548102, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
+  m_PrefabInstance: {fileID: 5749897140874690056}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1943036875142019189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5750434965464088398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e0862fef04c7beb468615af3d48d9705, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  missilePrefab: {fileID: 6708268864625220635, guid: af5fc0bc38ede7e44af2b87f8ebd50b4, type: 3}
+  fireRate: 2
+  missileSpeed: 10
 --- !u!4 &5754093346766323586 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4813205879603594, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
@@ -1552,14 +1598,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1718390857548102, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 4095179936498980300}
+      addedObject: {fileID: 4801252539332845838}
   m_SourcePrefab: {fileID: 100100000, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
 --- !u!1 &5750434966291102440 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1718390857548102, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}
   m_PrefabInstance: {fileID: 5749897141688630190}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4095179936498980300
+--- !u!114 &4801252539332845838
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1573,7 +1619,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   missilePrefab: {fileID: 6708268864625220635, guid: af5fc0bc38ede7e44af2b87f8ebd50b4, type: 3}
   fireRate: 2
-  missileSpeed: 30
+  missileSpeed: 10
 --- !u!4 &5754093347057515044 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4813205879603594, guid: b6362f50ca5d7b145ba56bc6c23080ee, type: 3}

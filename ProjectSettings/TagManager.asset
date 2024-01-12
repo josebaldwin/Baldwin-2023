@@ -8,7 +8,6 @@ TagManager:
   - Beam
   - Missile
   - JetEngine
-  - EnemyMissile
   layers:
   - Default
   - TransparentFX
@@ -19,8 +18,8 @@ TagManager:
   - PlayerShip
   - Missile
   - EnemyEngine
-  - Enemy
-  - EnemyMissile
+  - 
+  - 
   - 
   - 
   - 
