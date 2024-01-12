@@ -57,14 +57,15 @@ public class EnemySpawner : MonoBehaviour
     // Method to increase the spawn rate of enemies
     private void IncreaseSpawnRate()
     {
-        if (spawnInterval > 1f) // Ensure the spawn interval doesn't get too low
+        if (spawnInterval > 0.2f) // New lower limit for spawn interval
         {
-            spawnInterval /= 1.5f; // Increase the spawn rate by 1.5 times
-            CancelInvoke("SpawnEnemy"); // Cancel the current repeating invoke
-            InvokeRepeating("SpawnEnemy", 0f, spawnInterval); // Start a new repeating invoke with updated interval
-
-            // Log a message indicating the spawn rate has increased
-            Debug.Log("Spawn rate increased. New spawn interval: " + spawnInterval + " seconds.");
+            spawnInterval /= 1.5f;
+            CancelInvoke("SpawnEnemy");
+            InvokeRepeating("SpawnEnemy", 0f, spawnInterval);
+        }
+        else
+        {
+            Debug.Log("Spawn interval has reached its minimum limit.");
         }
     }
     private void SubscribeToEnemyDestruction(GameObject enemy)

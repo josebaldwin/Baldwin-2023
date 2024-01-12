@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.05819136, g: 0.06392626, b: 0.15301919, a: 1}
+  m_IndirectSpecularColor: {r: 0.05806759, g: 0.064029515, b: 0.15264377, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -997,7 +997,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ca54304e7f7ca448866813389e5dc87, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHits: 10
   glowMaterial: {fileID: 2100000, guid: 47295695f553fe643bd2a6f6daf81bb1, type: 2}
+  explosionParticlePrefab: {fileID: 183818, guid: 64d48cc8be380db4c9285fafe8c3c0a8, type: 3}
   glowDuration: 0.05
 --- !u!54 &1568936299
 Rigidbody:
