@@ -57,9 +57,9 @@ public class EnemySpawner : MonoBehaviour
     // Method to increase the spawn rate of enemies
     private void IncreaseSpawnRate()
     {
-        if (spawnInterval > 0.2f) // New lower limit for spawn interval
+        if (spawnInterval > 0.015f) // New lower limit for spawn interval
         {
-            spawnInterval /= 1.5f;
+            spawnInterval /= 1.2f;
             CancelInvoke("SpawnEnemy");
             InvokeRepeating("SpawnEnemy", 0f, spawnInterval);
         }
