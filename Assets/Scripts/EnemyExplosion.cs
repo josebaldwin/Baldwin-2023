@@ -6,6 +6,7 @@ public class EnemyExplosion : MonoBehaviour
 {
     public GameObject explosionParticlePrefab; // Assign in Inspector
     public event Action OnKill; // Event to be called when the enemy is killed
+    public int scoreValue = 10; // Score value for this enemy
 
     // Method to be called when resistance is depleted
     public void StartDestructionSequence()
@@ -21,6 +22,9 @@ public class EnemyExplosion : MonoBehaviour
 
     public void OnKillMethod()
     {
+        // Update the score before destroying the enemy
+        ScoreManager.Instance.AddScore(scoreValue);
+
         OnKill?.Invoke(); // Invoke the OnKill event
         PlayExplosionParticle();
         Destroy(gameObject); // Destroy the enemy GameObject

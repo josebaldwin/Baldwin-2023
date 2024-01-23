@@ -10,6 +10,7 @@ public class EnemyBehavior : MonoBehaviour
     private Rigidbody enemyRigidbody;
     public bool isResistanceDepleted = false; // Flag to track if resistance is depleted
 
+
     void Start()
     {
         enemyRigidbody = GetComponent<Rigidbody>();
