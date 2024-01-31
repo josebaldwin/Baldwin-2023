@@ -18,5 +18,15 @@ public class MissileCollisionHandler : MonoBehaviour
             // Destroy only the enemy missile
             Destroy(gameObject);
         }
+
+        if (collision.gameObject.CompareTag("Shield") && gameObject.CompareTag("EnemyMissile"))
+        {
+            ShieldBehavior shield = collision.gameObject.GetComponent<ShieldBehavior>();
+            if (shield != null)
+            {
+                shield.HitByMissile();
+            }
+            Destroy(gameObject); // Destroy the enemy missile
+        }
     }
 }

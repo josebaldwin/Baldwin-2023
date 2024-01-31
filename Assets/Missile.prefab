@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -1972644434011972866}
   - component: {fileID: 760975600471117745}
   - component: {fileID: 8986008883740059658}
-  - component: {fileID: 7489595143700024801}
+  - component: {fileID: -6760337535448695695}
   m_Layer: 7
   m_Name: Missile
   m_TagString: Missile
@@ -168,7 +168,7 @@ MonoBehaviour:
   minX: -100
   maxX: 100
   missileBoundaryX: 54
---- !u!114 &7489595143700024801
+--- !u!114 &-6760337535448695695
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

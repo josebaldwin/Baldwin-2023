@@ -1,6 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -10,44 +9,114 @@ public class PlayerShooting : MonoBehaviour
     public float missileSpeed = 10f; // Adjust this to control missile speed
 
     private float nextShootTime;
+    private bool isDoubleFireRateActive = false;
+    private bool isHomingActive = false; // Remove homing missile related fields
+
+    public float homingTurnSpeed = 5f; // Turn speed of homing missiles
+    public float homingMissileSpeed = 15f; // Speed of homing missiles
+
 
     void Update()
     {
-        // Check if the shoot key is held down
-        if (Input.GetKey(shootKey))
+        if (Input.GetKey(shootKey) && Time.time > nextShootTime)
         {
-            // Check if enough time has passed since the last shot
-            if (Time.time > nextShootTime)
-            {
-                // Shoot the missile
-                ShootMissile();
-
-                // Set the next allowed shoot time
-                nextShootTime = Time.time + shootingCooldown;
-            }
+            ShootMissile();
+            nextShootTime = Time.time + (isDoubleFireRateActive ? shootingCooldown / 2 : shootingCooldown);
         }
     }
 
-    void ShootMissile()
+    public void DoubleFireRate(bool enable)
     {
-        // Instantiate the Missile Prefab at the player's position without rotation
+        isDoubleFireRateActive = enable;
+    }
+
+    public void EnableHoming(bool enable)
+    {
+        isHomingActive = enable;
+    }
+
+    private void ShootMissile()
+    {
         GameObject missileInstance = Instantiate(missilePrefab, transform.position, Quaternion.identity);
 
-        // Set the layer of the missile to "Missile"
-        missileInstance.layer = LayerMask.NameToLayer("Missile");
+        if (isHomingActive)
+        {
+            GameObject closestEnemy = FindClosestEnemyToRight();
+            if (closestEnemy != null)
+            {
+                Debug.Log("Found closest enemy: " + closestEnemy.name);
 
-        // Access the Collider of the missile and set it as not a trigger (assuming you're using a Collider)
-        Collider missileCollider = missileInstance.GetComponent<Collider>();
+                // Calculate the direction to the closest enemy
+                Vector3 direction = (closestEnemy.transform.position - missileInstance.transform.position).normalized;
+
+                // Rotate the missile to face the closest enemy
+                missileInstance.transform.rotation = Quaternion.LookRotation(direction);
+
+                // Modify the missile's speed to track the closest enemy
+                missileInstance.GetComponent<Rigidbody>().velocity = direction * missileSpeed;
+            }
+            else
+            {
+                Debug.Log("No target found for homing missile");
+                SetupMissile(missileInstance);
+            }
+        }
+        else
+        {
+            SetupMissile(missileInstance); // Set up the missile's behavior when homing is not active
+        }
+    }
+
+
+    private void SetupMissile(GameObject missile)
+    {
+        missile.layer = LayerMask.NameToLayer("Missile");
+        Collider missileCollider = missile.GetComponent<Collider>();
         if (missileCollider != null)
         {
             missileCollider.isTrigger = false;
         }
-
-        // Access the Rigidbody of the missile and set its velocity along the global X-axis
-        Rigidbody missileRigidbody = missileInstance.GetComponent<Rigidbody>();
+        Rigidbody missileRigidbody = missile.GetComponent<Rigidbody>();
         if (missileRigidbody != null)
         {
-            missileRigidbody.velocity = new Vector3(missileSpeed, 0f, 0f); // Constant velocity in the X direction
+            missileRigidbody.velocity = transform.forward * missileSpeed;
         }
+    }
+
+    private GameObject FindClosestEnemyToRight()
+    {
+        // Get all enemies with the "Enemy" tag
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+
+        // Initialize variables to track the closest enemy and its distance
+        GameObject closestEnemy = null;
+        float minDistance = Mathf.Infinity;
+
+        // Get the player's position
+        Vector3 playerPosition = transform.position;
+
+        // Iterate through all enemies
+        foreach (GameObject enemy in enemies)
+        {
+            // Calculate the enemy's position
+            Vector3 enemyPosition = enemy.transform.position;
+
+            // Check if the enemy is to the right of the player
+            if (enemyPosition.x > playerPosition.x)
+            {
+                // Calculate the distance between the player and the enemy
+                float distance = Vector3.Distance(playerPosition, enemyPosition);
+
+                // Check if this enemy is closer than the current closest enemy
+                if (distance < minDistance)
+                {
+                    // Update the closest enemy and the minimum distance
+                    closestEnemy = enemy;
+                    minDistance = distance;
+                }
+            }
+        }
+
+        return closestEnemy;
     }
 }

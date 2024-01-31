@@ -9,6 +9,13 @@ TagManager:
   - Missile
   - JetEngine
   - EnemyMissile
+  - Laser
+  - Shield
+  - PowerUpDouble
+  - PowerUpHealth
+  - PowerUpHoming
+  - PowerUpOverkill
+  - Test
   layers:
   - Default
   - TransparentFX

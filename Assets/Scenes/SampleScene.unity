@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.057592258, g: 0.06361699, b: 0.152138, a: 1}
+  m_IndirectSpecularColor: {r: 0.057780407, g: 0.0637915, b: 0.15232897, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -255,7 +255,9 @@ MonoBehaviour:
   missilePrefab: {fileID: 6708268864625220635, guid: 24ffe095045ee094f838cdc44211adf4, type: 3}
   shootKey: 32
   shootingCooldown: 0.1
-  missileSpeed: 20
+  missileSpeed: 25
+  homingTurnSpeed: 1500
+  homingMissileSpeed: 35
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,7 +565,9 @@ MonoBehaviour:
   missilePrefab: {fileID: 6708268864625220635, guid: 24ffe095045ee094f838cdc44211adf4, type: 3}
   shootKey: 32
   shootingCooldown: 0.1
-  missileSpeed: 20
+  missileSpeed: 25
+  homingTurnSpeed: 1500
+  homingMissileSpeed: 35
 --- !u!1 &1152949456
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,6 +578,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1152949458}
   - component: {fileID: 1152949457}
+  - component: {fileID: 1152949459}
   m_Layer: 0
   m_Name: SpawnManager
   m_TagString: Untagged
@@ -618,6 +623,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1152949459
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1152949456}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44285406b8b1ead4e9e8fe568c9d7ea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerUpPrefabs:
+  - {fileID: 100006, guid: 339ec13e94b70ca469275f6f7e29bac3, type: 3}
+  - {fileID: 100002, guid: 0b96cfde923514d4f94409c375d99959, type: 3}
+  - {fileID: 100004, guid: f10a79f37ff522b4280e2844332bef77, type: 3}
+  - {fileID: 100004, guid: 9a8ab42d6f1b3a94e92fe881e0e867c6, type: 3}
+  spawnTimes:
+  - 5
+  - 10
+  - 15
+  - 20
 --- !u!1001 &1295006991
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1041,6 +1068,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5765273990716371872, guid: 44679d6f1b5be9449bc770e7f6c03970, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1568936299}
+    - targetCorrespondingSourceObject: {fileID: 5765273990716371872, guid: 44679d6f1b5be9449bc770e7f6c03970, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1568936301}
     - targetCorrespondingSourceObject: {fileID: 2582611651267641228, guid: 44679d6f1b5be9449bc770e7f6c03970, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1134609446}
@@ -1130,6 +1160,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1568936301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1568936289}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb9fd60914829e646a8d85f5b03596ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shieldPrefab: {fileID: 4956022417371818869, guid: c8718a02981a87f46b5ba184e5193046, type: 3}
+  doubleFireRateDuration: 10
+  overkillDuration: 10
 --- !u!1001 &1608355961
 PrefabInstance:
   m_ObjectHideFlags: 0

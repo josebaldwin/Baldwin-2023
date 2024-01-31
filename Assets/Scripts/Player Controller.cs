@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
 
         // Clamp player's position to the specified boundaries
         transform.position = new Vector3(
-            Mathf.Clamp(transform.position.x, -39f, 39f),
+            Mathf.Clamp(transform.position.x, -30f, 30f),
             Mathf.Clamp(transform.position.y, -12f, 14f),
             transform.position.z
         );
