@@ -3,35 +3,47 @@ using System.Collections;
 
 public class PowerUpSpawner : MonoBehaviour
 {
-    public GameObject[] powerUpPrefabs; // Assign your 4 power-up prefabs here in the Inspector
-    public float[] spawnTimes; // Times after which each power-up should spawn
+    public GameObject[] powerUpPrefabs; // Assign your power-up prefabs here in the Inspector
+    public float[] initialSpawnTimes; // Initial spawn times for each power-up type
+    public float[] respawnTimes; // Respawn times for each power-up type
+
+    private GameObject shieldInstance; // Reference to the spawned shield instance
 
     private void Start()
     {
-        if (powerUpPrefabs.Length != spawnTimes.Length)
+        if (powerUpPrefabs.Length != initialSpawnTimes.Length ||
+            powerUpPrefabs.Length != respawnTimes.Length)
         {
-            Debug.LogError("The number of power-ups and spawn times must be equal");
+            Debug.LogError("The number of power-ups, initial spawn times, and respawn times must be equal");
             return;
         }
 
-        for (int i = 0; i < spawnTimes.Length; i++)
+        // Spawn each power-up type initially and then continuously respawn them
+        for (int i = 0; i < powerUpPrefabs.Length; i++)
         {
-            StartCoroutine(SpawnPowerUp(i, spawnTimes[i]));
+            StartCoroutine(SpawnPowerUp(powerUpPrefabs[i], initialSpawnTimes[i], respawnTimes[i]));
         }
     }
 
-    private IEnumerator SpawnPowerUp(int powerUpIndex, float delay)
+    private IEnumerator SpawnPowerUp(GameObject powerUpPrefab, float initialSpawnTime, float respawnTime)
     {
-        yield return new WaitForSeconds(delay);
+        yield return new WaitForSeconds(initialSpawnTime);
 
-        GameObject powerUp = Instantiate(powerUpPrefabs[powerUpIndex], GetRandomSpawnPosition(), Quaternion.identity);
+        while (true)
+        {
+            // Spawn the power-up
+            GameObject powerUp = Instantiate(powerUpPrefab, GetRandomSpawnPosition(), Quaternion.identity);
 
-        // Set the scale of the power-up. Adjust these values as needed.
-        //float scaleFactor = 3.0f; // Example scale factor (2 times the original size)
-        //powerUp.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+            // Check if the power-up is a shield
+            if (powerUpPrefab.tag == "PowerUpShield")
+            {
+                // Store the shield instance reference
+                shieldInstance = powerUp;
+            }
 
-        // If you need non-uniform scaling, set the scale for each axis separately:
-        // powerUp.transform.localScale = new Vector3(scaleX, scaleY, scaleZ);
+            // Wait for the specified respawn time before spawning the next power-up
+            yield return new WaitForSeconds(respawnTime);
+        }
     }
 
     private Vector3 GetRandomSpawnPosition()
@@ -48,4 +60,3 @@ public class PowerUpSpawner : MonoBehaviour
         return new Vector3(randomX, randomY, 0f);
     }
 }
-//

@@ -89,7 +89,15 @@ public class PowersUpManager : MonoBehaviour
                 explosion.OnKillMethod();
             }
         }
+
+        // Find all enemy missiles and destroy them
+        GameObject[] missiles = GameObject.FindGameObjectsWithTag("EnemyMissile");
+        foreach (var missile in missiles)
+        {
+            Destroy(missile);
+        }
     }
+
 
     private void ActivateHomingMissile()
     {

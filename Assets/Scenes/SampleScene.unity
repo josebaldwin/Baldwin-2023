@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.05758465, g: 0.063345395, b: 0.15224195, a: 1}
+  m_IndirectSpecularColor: {r: 0.09579664, g: 0.09185561, b: 0.19517037, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -640,11 +640,16 @@ MonoBehaviour:
   - {fileID: 100002, guid: 0b96cfde923514d4f94409c375d99959, type: 3}
   - {fileID: 100004, guid: f10a79f37ff522b4280e2844332bef77, type: 3}
   - {fileID: 100004, guid: 9a8ab42d6f1b3a94e92fe881e0e867c6, type: 3}
-  spawnTimes:
-  - 5
-  - 10
+  initialSpawnTimes:
+  - 25
+  - 40
   - 15
-  - 20
+  - 50
+  respawnTimes:
+  - 25
+  - 45
+  - 15
+  - 35
 --- !u!1001 &1295006991
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1173,9 +1178,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shieldPrefab: {fileID: 4956022417371818869, guid: c8718a02981a87f46b5ba184e5193046, type: 3}
-  doubleFireRateDuration: 10
+  doubleFireRateDuration: 25
   homingDuration: 15
-  shieldHealth: 10
+  shieldHealth: 20
 --- !u!1001 &1608355961
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1357,8 +1362,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstThresholdSkybox: {fileID: 2100000, guid: 42eaf2c5dbb13dc498f15df5a5b05fda, type: 2}
   secondThresholdSkybox: {fileID: 2100000, guid: 69e10e886d52d20478f9ed5424126be8, type: 2}
-  firstScoreThreshold: 500
-  secondScoreThreshold: 1500
+  firstScoreThreshold: 1500
+  secondScoreThreshold: 3000
 --- !u!4 &2076467065
 Transform:
   m_ObjectHideFlags: 0
