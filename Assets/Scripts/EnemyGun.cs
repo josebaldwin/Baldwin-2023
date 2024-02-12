@@ -9,11 +9,14 @@ public class EnemyGun : MonoBehaviour
     private float nextFireTime;
     private float enemySpeed; // Speed of the enemy
     private EnemyBehavior enemyBehavior; // Reference to the EnemyBehavior script
+    private ShieldBehavior shield; // Reference to the ShieldBehavior script
 
     void Start()
     {
         nextFireTime = Time.time + fireRate;
         enemyBehavior = GetComponentInParent<EnemyBehavior>();
+        shield = FindObjectOfType<ShieldBehavior>(); // Find the ShieldBehavior script in the scene
+
         if (enemyBehavior != null)
         {
             enemySpeed = enemyBehavior.speed; // Get the speed of the enemy

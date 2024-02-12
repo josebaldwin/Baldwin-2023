@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.057780407, g: 0.0637915, b: 0.15232897, a: 1}
+  m_IndirectSpecularColor: {r: 0.05758465, g: 0.063345395, b: 0.15224195, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -256,8 +256,8 @@ MonoBehaviour:
   shootKey: 32
   shootingCooldown: 0.1
   missileSpeed: 25
-  homingTurnSpeed: 1500
-  homingMissileSpeed: 35
+  homingMissileAnglePositive: 1.5
+  homingMissileAngleNegative: -1.5
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -566,8 +566,8 @@ MonoBehaviour:
   shootKey: 32
   shootingCooldown: 0.1
   missileSpeed: 25
-  homingTurnSpeed: 1500
-  homingMissileSpeed: 35
+  homingMissileAnglePositive: 1.5
+  homingMissileAngleNegative: -1.5
 --- !u!1 &1152949456
 GameObject:
   m_ObjectHideFlags: 0
@@ -1174,7 +1174,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shieldPrefab: {fileID: 4956022417371818869, guid: c8718a02981a87f46b5ba184e5193046, type: 3}
   doubleFireRateDuration: 10
-  overkillDuration: 10
+  homingDuration: 15
+  shieldHealth: 10
 --- !u!1001 &1608355961
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -9780,7 +9780,7 @@ GameObject:
   m_Component:
   - component: {fileID: 400006}
   m_Layer: 0
-  m_Name: Homing
+  m_Name: TripleFire
   m_TagString: PowerUpHoming
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

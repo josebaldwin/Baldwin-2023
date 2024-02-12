@@ -10,11 +10,13 @@ public class PlayerShooting : MonoBehaviour
 
     private float nextShootTime;
     private bool isDoubleFireRateActive = false;
-    private bool isHomingActive = false; // Remove homing missile related fields
+    private bool isHomingActive = false;
+    private float homingMissileAngle = 0f;
 
-    public float homingTurnSpeed = 5f; // Turn speed of homing missiles
-    public float homingMissileSpeed = 15f; // Speed of homing missiles
-
+    [SerializeField]
+    private float homingMissileAnglePositive = 90f; // Angle for the first additional missile
+    [SerializeField]
+    private float homingMissileAngleNegative = -90f; // Angle for the second additional missile
 
     void Update()
     {
@@ -30,43 +32,48 @@ public class PlayerShooting : MonoBehaviour
         isDoubleFireRateActive = enable;
     }
 
-    public void EnableHoming(bool enable)
+    public void EnableHoming(bool enable, float homingAngle = 0f)
     {
         isHomingActive = enable;
+        homingMissileAngle = homingAngle; // Set the homing angle
     }
 
     private void ShootMissile()
     {
+        // Original missile
         GameObject missileInstance = Instantiate(missilePrefab, transform.position, Quaternion.identity);
+        SetupMissile(missileInstance);
 
         if (isHomingActive)
         {
-            GameObject closestEnemy = FindClosestEnemyToRight();
-            if (closestEnemy != null)
-            {
-                Debug.Log("Found closest enemy: " + closestEnemy.name);
+            // Calculate the initial direction based on the player's forward direction
+            Vector3 initialDirection = transform.forward;
 
-                // Calculate the direction to the closest enemy
-                Vector3 direction = (closestEnemy.transform.position - missileInstance.transform.position).normalized;
+            // First additional missile with positive Y angle
+            GameObject missileInstancePositive = Instantiate(missilePrefab, transform.position, Quaternion.identity);
+            SetupMissile(missileInstancePositive);
 
-                // Rotate the missile to face the closest enemy
-                missileInstance.transform.rotation = Quaternion.LookRotation(direction);
+            // Modify the Y component of the velocity to add an angle globally
+            missileInstancePositive.GetComponent<Rigidbody>().velocity = Quaternion.Euler(0f, 0f, homingMissileAnglePositive) * initialDirection * missileSpeed;
 
-                // Modify the missile's speed to track the closest enemy
-                missileInstance.GetComponent<Rigidbody>().velocity = direction * missileSpeed;
-            }
-            else
-            {
-                Debug.Log("No target found for homing missile");
-                SetupMissile(missileInstance);
-            }
-        }
-        else
-        {
-            SetupMissile(missileInstance); // Set up the missile's behavior when homing is not active
+            // Keep Z coordinate at 0
+            Vector3 newPositionPositive = missileInstancePositive.transform.position;
+            newPositionPositive.z = 0f;
+            missileInstancePositive.transform.position = newPositionPositive;
+
+            // Second additional missile with negative Y angle
+            GameObject missileInstanceNegative = Instantiate(missilePrefab, transform.position, Quaternion.identity);
+            SetupMissile(missileInstanceNegative);
+
+            // Modify the Y component of the velocity to add a negative angle globally
+            missileInstanceNegative.GetComponent<Rigidbody>().velocity = Quaternion.Euler(0f, 0f, homingMissileAngleNegative) * initialDirection * missileSpeed;
+
+            // Keep Z coordinate at 0
+            Vector3 newPositionNegative = missileInstanceNegative.transform.position;
+            newPositionNegative.z = 0f;
+            missileInstanceNegative.transform.position = newPositionNegative;
         }
     }
-
 
     private void SetupMissile(GameObject missile)
     {
@@ -81,42 +88,5 @@ public class PlayerShooting : MonoBehaviour
         {
             missileRigidbody.velocity = transform.forward * missileSpeed;
         }
-    }
-
-    private GameObject FindClosestEnemyToRight()
-    {
-        // Get all enemies with the "Enemy" tag
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-        // Initialize variables to track the closest enemy and its distance
-        GameObject closestEnemy = null;
-        float minDistance = Mathf.Infinity;
-
-        // Get the player's position
-        Vector3 playerPosition = transform.position;
-
-        // Iterate through all enemies
-        foreach (GameObject enemy in enemies)
-        {
-            // Calculate the enemy's position
-            Vector3 enemyPosition = enemy.transform.position;
-
-            // Check if the enemy is to the right of the player
-            if (enemyPosition.x > playerPosition.x)
-            {
-                // Calculate the distance between the player and the enemy
-                float distance = Vector3.Distance(playerPosition, enemyPosition);
-
-                // Check if this enemy is closer than the current closest enemy
-                if (distance < minDistance)
-                {
-                    // Update the closest enemy and the minimum distance
-                    closestEnemy = enemy;
-                    minDistance = distance;
-                }
-            }
-        }
-
-        return closestEnemy;
     }
 }

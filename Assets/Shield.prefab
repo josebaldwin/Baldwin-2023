@@ -122,6 +122,7 @@ MonoBehaviour:
   regularMaterial: {fileID: 2100000, guid: 2031e3a985bbd524ba17cfae348053f7, type: 2}
   glowingMaterial: {fileID: 2100000, guid: e38daa4b8698eab4c8d8ce5d9dc59061, type: 2}
   glowDuration: 0.1
+  maxShieldHealth: 20
 --- !u!54 &-9209446570776700392
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -143,7 +144,7 @@ Rigidbody:
     serializedVersion: 2
     m_Bits: 0
   m_ImplicitCom: 1
-  m_ImplicitTensor: 1
+  m_ImplicitTensor: 0
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
