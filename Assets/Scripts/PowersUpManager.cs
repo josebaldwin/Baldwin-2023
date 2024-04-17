@@ -61,7 +61,7 @@ public class PowersUpManager : MonoBehaviour
 
             // Adjust the scale of the shield relative to the parent's scale
             Vector3 parentScale = transform.lossyScale; // Gets the absolute scale of the parent
-            float desiredShieldScale = 3.5f; // Desired scale factor for the shield
+            float desiredShieldScale = 3.8f; // Desired scale factor for the shield
             shieldInstance.transform.localScale = new Vector3(desiredShieldScale / parentScale.x, desiredShieldScale / parentScale.y, desiredShieldScale / parentScale.z);
 
             if (ShipBarsManager.Instance != null)
@@ -75,12 +75,6 @@ public class PowersUpManager : MonoBehaviour
             }
         }
     }
-
-
-
-
-
-
 
     private IEnumerator ActivateDoubleFireRateCoroutine(float duration)
     {
