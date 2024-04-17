@@ -30,7 +30,7 @@ public class ScoreManager : MonoBehaviour
     public void AddScore(int score)
     {
         TotalScore += score;
-        Debug.Log("Total Score: " + TotalScore);
+        //Debug.Log("Total Score: " + TotalScore);
 
         if (TotalScore >= firstScoreThreshold && !firstThresholdReached)
         {

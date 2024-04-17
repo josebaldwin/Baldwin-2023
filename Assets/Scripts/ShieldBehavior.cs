@@ -1,8 +1,12 @@
 using UnityEngine;
+using System;
 using System.Collections;
 
 public class ShieldBehavior : MonoBehaviour
 {
+    // Define an event that will be triggered whenever the shield's health changes
+    public event Action<float> ShieldHealthChanged;
+
     [Header("Materials")]
     public Material regularMaterial; // Regular shield material
     public Material glowingMaterial; // Glowing shield material for when hit
@@ -12,7 +16,7 @@ public class ShieldBehavior : MonoBehaviour
 
     [Header("Shield Health")]
     public float maxShieldHealth = 50f; // Maximum shield health
-    private float shieldHealth; // Current shield health
+    public float shieldHealth; // Current shield health (made public for visibility)
 
     private Renderer shieldRenderer;
     private Coroutine glowCoroutine; // Store the glow coroutine
@@ -25,13 +29,27 @@ public class ShieldBehavior : MonoBehaviour
         shieldHealth = maxShieldHealth; // Initialize shield health to maximum
     }
 
+    // Method to handle when the shield is picked up
+    public void PickupShield()
+    {
+        shieldHealth = maxShieldHealth; // Set to maximum when picked up
+        ShieldHealthChanged?.Invoke(1f); // Ensure it's invoked with 100% health
+    }
+
+
     public void TakeDamage(float damageAmount)
     {
         if (!isHit)
         {
             shieldHealth -= damageAmount;
-            Debug.Log("Shield Health: " + shieldHealth);
-
+            Debug.Log("Shield Health after damage: " + shieldHealth);
+            if (shieldHealth <= 0f)
+            {
+                Destroy(gameObject);
+            }
+            // Trigger the event regardless of the hit flag.
+            ShieldHealthChanged?.Invoke(shieldHealth / maxShieldHealth);
+            Debug.Log("Shield health changed triggered with: " + (shieldHealth / maxShieldHealth));
             if (shieldHealth <= 0f)
             {
                 // If shield health reaches zero or below, destroy the shield
@@ -51,6 +69,9 @@ public class ShieldBehavior : MonoBehaviour
                 // Start the glow effect
                 glowCoroutine = StartCoroutine(TempChangeMaterial());
             }
+
+            // Trigger the ShieldHealthChanged event with the updated shield health
+            ShieldHealthChanged?.Invoke(shieldHealth / maxShieldHealth);
         }
     }
 

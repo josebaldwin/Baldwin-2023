@@ -7,11 +7,10 @@ public class PowersUpManager : MonoBehaviour
     public float doubleFireRateDuration = 15f; // Duration for double fire rate
     public float homingDuration = 15f; // Duration for homing power-up (changed to 15 seconds)
 
-
     private PlayerShooting[] playerShootings; // Array to hold multiple PlayerShooting instances
-    private GameObject shieldInstance;
-    public float shieldHealth = 20f; // Shield health
-
+    private GameObject shieldInstance; // Reference to the spawned shield instance
+    private ProgressBar shieldHealthBar; // Reference to the shield health bar
+    private float shieldHealth = 100f; // Initial shield health
 
     private void Start()
     {
@@ -20,6 +19,15 @@ public class PowersUpManager : MonoBehaviour
         if (playerShootings == null || playerShootings.Length == 0)
         {
             Debug.LogError("PlayerShooting components not found on the children of the GameObject.");
+            this.enabled = false;
+            return;
+        }
+
+        // Find and assign the shield health bar
+        shieldHealthBar = GameObject.FindWithTag("ShieldHealthBar").GetComponent<ProgressBar>();
+        if (shieldHealthBar == null)
+        {
+            Debug.LogError("Shield health bar not found.");
             this.enabled = false;
             return;
         }
@@ -56,10 +64,22 @@ public class PowersUpManager : MonoBehaviour
             float desiredShieldScale = 3.5f; // Desired scale factor for the shield
             shieldInstance.transform.localScale = new Vector3(desiredShieldScale / parentScale.x, desiredShieldScale / parentScale.y, desiredShieldScale / parentScale.z);
 
-            // Set the initial shield health here
-            shieldHealth = 5f; // Set to the desired initial value
+            if (ShipBarsManager.Instance != null)
+            {
+                ShipBarsManager.Instance.SetShieldInstance(shieldInstance);
+                ShipBarsManager.Instance.PickupShield(); // Now it should correctly set the shield active and initialize the bar to 100%
+            }
+            else
+            {
+                Debug.LogError("ShipBarsManager instance not found.");
+            }
         }
     }
+
+
+
+
+
 
 
     private IEnumerator ActivateDoubleFireRateCoroutine(float duration)
@@ -98,7 +118,6 @@ public class PowersUpManager : MonoBehaviour
         }
     }
 
-
     private void ActivateHomingMissile()
     {
         // Activate homing missiles for all player shootings
@@ -110,6 +129,7 @@ public class PowersUpManager : MonoBehaviour
         // Start a coroutine to deactivate homing after the specified duration
         StartCoroutine(DeactivateHomingCoroutine(homingDuration));
     }
+
     private IEnumerator DeactivateHomingCoroutine(float duration)
     {
         yield return new WaitForSeconds(duration);
@@ -119,5 +139,24 @@ public class PowersUpManager : MonoBehaviour
         {
             shooting.EnableHoming(false);
         }
+    }
+
+    private void UpdateShieldHealthBar()
+    {
+        if (shieldHealthBar != null)
+        {
+            shieldHealthBar.BarValue = shieldHealth;
+        }
+    }
+
+    public void TakeShieldDamage(float damage)
+    {
+        shieldHealth -= damage;
+        if (shieldHealth <= 0f)
+        {
+            Destroy(shieldInstance);
+            shieldInstance = null;
+        }
+        UpdateShieldHealthBar();
     }
 }

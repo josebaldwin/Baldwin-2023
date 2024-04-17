@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -10,11 +11,17 @@ public class PlayerHealth : MonoBehaviour
     public float glowDuration = 0.5f; // Duration of the glow effect
     private Material[] originalMaterials; // To store original materials of the player
 
+    // Reference to the ShipBarsManager script
+    private ShipBarsManager shipBarsManager;
+
     void Start()
     {
         currentHits = 0;
         playerRenderers = GetComponentsInChildren<Renderer>();
         StoreOriginalMaterials();
+
+        // Find the ShipBarsManager script in the scene
+        shipBarsManager = FindObjectOfType<ShipBarsManager>();
     }
 
     void OnCollisionEnter(Collision collision)
@@ -23,6 +30,11 @@ public class PlayerHealth : MonoBehaviour
         {
             currentHits++;
             ActivateGlowEffect();
+            // Calculate ship health percentage and trigger event
+            float shipHealthPercentage = 1f - (float)currentHits / maxHits;
+
+            // Update the ship health bar in the ShipBarsManager
+            shipBarsManager.UpdateHealthBar(shipHealthPercentage);
 
             if (currentHits >= maxHits)
             {

@@ -16,6 +16,7 @@ TagManager:
   - PowerUpHoming
   - PowerUpOverkill
   - Test
+  - ShieldHealthBar
   layers:
   - Default
   - TransparentFX
