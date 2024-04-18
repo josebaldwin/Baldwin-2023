@@ -12,6 +12,9 @@ public class PowersUpManager : MonoBehaviour
     private ProgressBar shieldHealthBar; // Reference to the shield health bar
     private float shieldHealth = 100f; // Initial shield health
 
+    private Coroutine doubleFireRateCoroutine;
+    private Coroutine homingCoroutine;
+
     private void Start()
     {
         playerShootings = GetComponentsInChildren<PlayerShooting>(true);
@@ -23,7 +26,6 @@ public class PowersUpManager : MonoBehaviour
             return;
         }
 
-        // Find and assign the shield health bar
         shieldHealthBar = GameObject.FindWithTag("ShieldHealthBar").GetComponent<ProgressBar>();
         if (shieldHealthBar == null)
         {
@@ -41,7 +43,7 @@ public class PowersUpManager : MonoBehaviour
                 ActivateShield();
                 break;
             case "PowerUpDouble":
-                StartCoroutine(ActivateDoubleFireRateCoroutine(doubleFireRateDuration));
+                ActivateDoubleFireRateCoroutine(doubleFireRateDuration);
                 break;
             case "PowerUpOverkill":
                 ActivateOverkill();
@@ -55,28 +57,42 @@ public class PowersUpManager : MonoBehaviour
 
     private void ActivateShield()
     {
-        if (shieldInstance == null)
+        if (shieldInstance != null)
+        {
+            shieldHealth = 100f;
+            UpdateShieldHealthBar();
+        }
+        else
         {
             shieldInstance = Instantiate(shieldPrefab, transform.position, Quaternion.identity, transform);
-
-            // Adjust the scale of the shield relative to the parent's scale
-            Vector3 parentScale = transform.lossyScale; // Gets the absolute scale of the parent
-            float desiredShieldScale = 3.8f; // Desired scale factor for the shield
+            Vector3 parentScale = transform.lossyScale;
+            float desiredShieldScale = 3.8f;
             shieldInstance.transform.localScale = new Vector3(desiredShieldScale / parentScale.x, desiredShieldScale / parentScale.y, desiredShieldScale / parentScale.z);
+            shieldHealth = 100f;
+            UpdateShieldHealthBar();
+        }
 
-            if (ShipBarsManager.Instance != null)
-            {
-                ShipBarsManager.Instance.SetShieldInstance(shieldInstance);
-                ShipBarsManager.Instance.PickupShield(); // Now it should correctly set the shield active and initialize the bar to 100%
-            }
-            else
-            {
-                Debug.LogError("ShipBarsManager instance not found.");
-            }
+        if (ShipBarsManager.Instance != null)
+        {
+            ShipBarsManager.Instance.SetShieldInstance(shieldInstance);
+            ShipBarsManager.Instance.PickupShield();
+        }
+        else
+        {
+            Debug.LogError("ShipBarsManager instance not found.");
         }
     }
 
-    private IEnumerator ActivateDoubleFireRateCoroutine(float duration)
+    private void ActivateDoubleFireRateCoroutine(float duration)
+    {
+        if (doubleFireRateCoroutine != null)
+        {
+            StopCoroutine(doubleFireRateCoroutine);
+        }
+        doubleFireRateCoroutine = StartCoroutine(DoubleFireRate(duration));
+    }
+
+    private IEnumerator DoubleFireRate(float duration)
     {
         foreach (var shooting in playerShootings)
         {
@@ -91,10 +107,7 @@ public class PowersUpManager : MonoBehaviour
 
     private void ActivateOverkill()
     {
-        // Find all enemies with the tag "Enemy"
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-
-        // Activate the OnKillMethod for each enemy
         foreach (var enemy in enemies)
         {
             EnemyExplosion explosion = enemy.GetComponent<EnemyExplosion>();
@@ -104,7 +117,6 @@ public class PowersUpManager : MonoBehaviour
             }
         }
 
-        // Find all enemy missiles and destroy them
         GameObject[] missiles = GameObject.FindGameObjectsWithTag("EnemyMissile");
         foreach (var missile in missiles)
         {
@@ -114,21 +126,20 @@ public class PowersUpManager : MonoBehaviour
 
     private void ActivateHomingMissile()
     {
-        // Activate homing missiles for all player shootings
-        foreach (var shooting in playerShootings)
+        if (homingCoroutine != null)
         {
-            shooting.EnableHoming(true, 0f); // Enable homing with a default angle of 0 degrees
+            StopCoroutine(homingCoroutine);
         }
-
-        // Start a coroutine to deactivate homing after the specified duration
-        StartCoroutine(DeactivateHomingCoroutine(homingDuration));
+        homingCoroutine = StartCoroutine(ActivateHomingCoroutine(homingDuration));
     }
 
-    private IEnumerator DeactivateHomingCoroutine(float duration)
+    private IEnumerator ActivateHomingCoroutine(float duration)
     {
+        foreach (var shooting in playerShootings)
+        {
+            shooting.EnableHoming(true);
+        }
         yield return new WaitForSeconds(duration);
-
-        // Deactivate homing after the specified duration
         foreach (var shooting in playerShootings)
         {
             shooting.EnableHoming(false);
