@@ -17,6 +17,7 @@ TagManager:
   - PowerUpOverkill
   - Test
   - ShieldHealthBar
+  - GameOverPanelTag
   layers:
   - Default
   - TransparentFX

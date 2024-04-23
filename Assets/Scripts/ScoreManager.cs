@@ -1,15 +1,16 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ScoreManager : MonoBehaviour
 {
     public static ScoreManager Instance { get; private set; }
 
-
     public int TotalScore { get; private set; }
     public Material firstThresholdSkybox;  // Assign the first threshold skybox material in the inspector
     public Material secondThresholdSkybox; // Assign the second threshold skybox material in the inspector
-    public int firstScoreThreshold = 100;  // First score threshold to change the skybox
-    public int secondScoreThreshold = 200; // Second score threshold to change the skybox
+    public Material defaultSkybox;         // Assign a default skybox material for resetting
+    public int firstScoreThreshold = 200;  // First score threshold to change the skybox
+    public int secondScoreThreshold = 500; // Second score threshold to change the skybox
 
     private bool firstThresholdReached = false;
     private bool secondThresholdReached = false;
@@ -19,25 +20,29 @@ public class ScoreManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject);  // Make this object persistent
         }
-        else
+        else if (Instance != this)
         {
-            Destroy(gameObject);
+            Destroy(gameObject);  // Ensure no duplicate managers exist
         }
     }
+
 
     public void AddScore(int score)
     {
         TotalScore += score;
-        //Debug.Log("Total Score: " + TotalScore);
+        CheckScoreThresholds();
+    }
 
+    private void CheckScoreThresholds()
+    {
         if (TotalScore >= firstScoreThreshold && !firstThresholdReached)
         {
             ChangeSkybox(firstThresholdSkybox);
             firstThresholdReached = true;
         }
-        else if (TotalScore >= secondScoreThreshold && !secondThresholdReached)
+        if (TotalScore >= secondScoreThreshold && !secondThresholdReached)
         {
             ChangeSkybox(secondThresholdSkybox);
             secondThresholdReached = true;
@@ -55,5 +60,23 @@ public class ScoreManager : MonoBehaviour
         {
             Debug.LogError("New skybox material not assigned in ScoreManager.");
         }
+    }
+
+    public void ResetScore()
+    {
+        TotalScore = 0;
+        firstThresholdReached = false;
+        secondThresholdReached = false;
+        // Reset skybox to default when the score is reset
+        if (defaultSkybox != null)
+        {
+            RenderSettings.skybox = defaultSkybox;
+        }
+        else
+        {
+            Debug.LogError("Default skybox material not assigned in ScoreManager.");
+        }
+        DynamicGI.UpdateEnvironment();
+        // Notify any listeners that the score has been reset if necessary
     }
 }

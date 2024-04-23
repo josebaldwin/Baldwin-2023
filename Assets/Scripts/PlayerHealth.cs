@@ -85,13 +85,21 @@ public class PlayerHealth : MonoBehaviour
 
     void OnKill()
     {
-        // Play the explosion particle effect
-        if (explosionParticlePrefab != null)
-        {
-            Instantiate(explosionParticlePrefab, transform.position, Quaternion.identity);
-        }
+        Debug.Log("Player killed. Instantiating explosion and disabling player.");
+        Instantiate(explosionParticlePrefab, transform.position, Quaternion.identity);
 
-        // Destroy the player GameObject
-        Destroy(gameObject);
+        // Instead of destroying, just disable the player GameObject.
+        gameObject.SetActive(false);
+
+        GameManager gameManager = FindObjectOfType<GameManager>();
+        if (gameManager != null)
+        {
+            gameManager.GameOver();
+        }
+        else
+        {
+            Debug.LogError("GameManager not found in the scene.");
+        }
     }
+
 }
