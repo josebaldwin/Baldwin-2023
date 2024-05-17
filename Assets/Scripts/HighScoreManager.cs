@@ -11,12 +11,27 @@ public class HighScoreEntry
 
 public class HighScoreManager : MonoBehaviour
 {
-    public List<HighScoreEntry> highScores = new List<HighScoreEntry>();
+    public static HighScoreManager Instance { get; private set; }
+    private List<HighScoreEntry> highScores = new List<HighScoreEntry>();
     private const string HighScoreKey = "HighScores";
 
     void Awake()
     {
-        LoadHighScores();
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+            LoadHighScores();
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public bool IsHighScore(int score)
+    {
+        return highScores.Count < 5 || score > highScores.Last().score; // Assuming top 5 scores
     }
 
     public void AddHighScore(string name, int score)
@@ -25,11 +40,16 @@ public class HighScoreManager : MonoBehaviour
         highScores.Add(newEntry);
         highScores = highScores.OrderByDescending(x => x.score).ToList();
 
-        // Keep top 10 scores
-        if (highScores.Count > 10)
-            highScores.RemoveRange(10, highScores.Count - 10);
+        if (highScores.Count > 5)  // Keep only the top 5
+            highScores.RemoveRange(5, highScores.Count - 5);
 
         SaveHighScores();
+        Debug.Log($"High score added: {name} with score {score}");
+    }
+
+    public List<HighScoreEntry> GetHighScores()
+    {
+        return highScores;
     }
 
     private void LoadHighScores()
@@ -37,15 +57,23 @@ public class HighScoreManager : MonoBehaviour
         string jsonData = PlayerPrefs.GetString(HighScoreKey, "");
         if (!string.IsNullOrEmpty(jsonData))
         {
-            highScores = JsonUtility.FromJson<List<HighScoreEntry>>(jsonData);
+            HighScoresListWrapper wrapper = JsonUtility.FromJson<HighScoresListWrapper>(jsonData);
+            highScores = wrapper.highScores;
         }
+    }
+
+    [System.Serializable]
+    public class HighScoresListWrapper
+    {
+        public List<HighScoreEntry> highScores;
     }
 
     private void SaveHighScores()
     {
-        string jsonData = JsonUtility.ToJson(highScores);
+        HighScoresListWrapper wrapper = new HighScoresListWrapper { highScores = highScores };
+        string jsonData = JsonUtility.ToJson(wrapper);
         PlayerPrefs.SetString(HighScoreKey, jsonData);
         PlayerPrefs.Save();
+        Debug.Log("High scores saved.");
     }
 }
-//
