@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.05760707, g: 0.06336182, b: 0.15224084, a: 1}
+  m_IndirectSpecularColor: {r: 0.08756084, g: 0.085430495, b: 0.18499798, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1442,15 +1442,15 @@ MonoBehaviour:
   - {fileID: 100004, guid: f10a79f37ff522b4280e2844332bef77, type: 3}
   - {fileID: 100004, guid: 9a8ab42d6f1b3a94e92fe881e0e867c6, type: 3}
   initialSpawnTimes:
-  - 25
-  - 40
-  - 15
+  - 30
+  - 45
+  - 20
   - 50
   respawnTimes:
-  - 25
-  - 45
-  - 15
-  - 35
+  - 40
+  - 90
+  - 30
+  - 60
 --- !u!1001 &1164213384
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3200,8 +3200,8 @@ MonoBehaviour:
   firstThresholdSkybox: {fileID: 2100000, guid: 42eaf2c5dbb13dc498f15df5a5b05fda, type: 2}
   secondThresholdSkybox: {fileID: 2100000, guid: 69e10e886d52d20478f9ed5424126be8, type: 2}
   defaultSkybox: {fileID: 2100000, guid: a4be220830e90ea4eb88b48b7fd376ce, type: 2}
-  firstScoreThreshold: 100
-  secondScoreThreshold: 200
+  firstScoreThreshold: 5000
+  secondScoreThreshold: 10000
 --- !u!4 &2076467065
 Transform:
   m_ObjectHideFlags: 0
