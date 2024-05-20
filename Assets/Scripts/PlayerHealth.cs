@@ -14,6 +14,9 @@ public class PlayerHealth : MonoBehaviour
     // Reference to the ShipBarsManager script
     private ShipBarsManager shipBarsManager;
 
+    // Flag to indicate if the shield is active
+    private bool isShieldActive = false;
+
     void Start()
     {
         currentHits = 0;
@@ -26,6 +29,13 @@ public class PlayerHealth : MonoBehaviour
 
     void OnCollisionEnter(Collision collision)
     {
+        // Check if the shield is active and ignore damage if it is
+        if (isShieldActive)
+        {
+            Debug.Log("Shield is active, no damage taken.");
+            return;
+        }
+
         if (collision.gameObject.CompareTag("EnemyMissile") || collision.gameObject.CompareTag("Enemy"))
         {
             currentHits++;
@@ -102,4 +112,15 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
+    // Method to activate the shield
+    public void ActivateShield()
+    {
+        isShieldActive = true;
+    }
+
+    // Method to deactivate the shield
+    public void DeactivateShield()
+    {
+        isShieldActive = false;
+    }
 }

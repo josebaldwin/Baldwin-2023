@@ -22,11 +22,22 @@ public class ShieldBehavior : MonoBehaviour
     private Coroutine glowCoroutine; // Store the glow coroutine
     private bool isHit = false; // Flag to track if the shield is hit
 
+    private PlayerHealth playerHealth; // Reference to the PlayerHealth script
+
     void Start()
     {
         shieldRenderer = GetComponent<Renderer>();
         shieldRenderer.material = regularMaterial;
         shieldHealth = maxShieldHealth; // Initialize shield health to maximum
+
+        // Find the PlayerHealth script in the scene
+        playerHealth = FindObjectOfType<PlayerHealth>();
+
+        // Notify the PlayerHealth script that the shield is active
+        if (playerHealth != null)
+        {
+            playerHealth.ActivateShield();
+        }
     }
 
     // Method to handle when the shield is picked up
@@ -36,26 +47,23 @@ public class ShieldBehavior : MonoBehaviour
         ShieldHealthChanged?.Invoke(1f); // Ensure it's invoked with 100% health
     }
 
-
     public void TakeDamage(float damageAmount)
     {
         if (!isHit)
         {
             shieldHealth -= damageAmount;
             Debug.Log("Shield Health after damage: " + shieldHealth);
+
             if (shieldHealth <= 0f)
             {
-                Destroy(gameObject);
+                DestroyShield();
             }
+
             // Trigger the event regardless of the hit flag.
             ShieldHealthChanged?.Invoke(shieldHealth / maxShieldHealth);
             Debug.Log("Shield health changed triggered with: " + (shieldHealth / maxShieldHealth));
-            if (shieldHealth <= 0f)
-            {
-                // If shield health reaches zero or below, destroy the shield
-                Destroy(gameObject);
-            }
-            else
+
+            if (shieldHealth > 0f)
             {
                 // If the shield is not already hit, start the glow effect
                 isHit = true;
@@ -69,9 +77,6 @@ public class ShieldBehavior : MonoBehaviour
                 // Start the glow effect
                 glowCoroutine = StartCoroutine(TempChangeMaterial());
             }
-
-            // Trigger the ShieldHealthChanged event with the updated shield health
-            ShieldHealthChanged?.Invoke(shieldHealth / maxShieldHealth);
         }
     }
 
@@ -87,5 +92,17 @@ public class ShieldBehavior : MonoBehaviour
 
         isHit = false; // Reset the hit flag
         glowCoroutine = null; // Reset the coroutine reference
+    }
+
+    private void DestroyShield()
+    {
+        Debug.Log("Shield destroyed.");
+        Destroy(gameObject);
+
+        // Notify the PlayerHealth script that the shield is deactivated
+        if (playerHealth != null)
+        {
+            playerHealth.DeactivateShield();
+        }
     }
 }
