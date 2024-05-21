@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
-
     public HighScoreManager highScoreManager;
     public GameObject gameOverPanel;
     public TMP_Text scoreText;
@@ -18,39 +16,29 @@ public class GameManager : MonoBehaviour
 
     public static event Action OnRestartRequested = delegate { };
 
-    private bool highScoreAdded = false;
-
     void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded;
-            OnRestartRequested += ReloadScene;
-            Debug.Log("GameManager Awake: Event listeners added.");
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        SceneManager.sceneLoaded += OnSceneLoaded;
+        DontDestroyOnLoad(gameObject);
+        OnRestartRequested += ReloadScene;
+        Debug.Log("GameManager Awake: Event listeners added.");
     }
 
     void OnDestroy()
     {
-        if (Instance == this)
-        {
-            SceneManager.sceneLoaded -= OnSceneLoaded;
-            OnRestartRequested -= ReloadScene;
-            Debug.Log("GameManager OnDestroy: Event listeners removed.");
-        }
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+        OnRestartRequested -= ReloadScene;
+        Debug.Log("GameManager OnDestroy: Event listeners removed.");
     }
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        AssignUIComponents();
-        highScoreAdded = false;
-        Debug.Log($"GameManager OnSceneLoaded: UI components assigned. Scene: {scene.name}");
+        Debug.Log("GameManager OnSceneLoaded: Scene loaded: " + scene.name);
+        if (scene.name == "MainScene") // Replace "MainScene" with the name of your main game scene
+        {
+            AssignUIComponents();
+            Debug.Log("UI components assigned for MainScene.");
+        }
     }
 
     void AssignUIComponents()
@@ -58,12 +46,12 @@ public class GameManager : MonoBehaviour
         GameObject canvas = GameObject.Find("Canvas");
         if (canvas)
         {
+            Debug.Log("Canvas found in the scene.");
             gameOverPanel = canvas.transform.Find("GameOver").gameObject;
             if (gameOverPanel)
             {
-                gameOverPanel.SetActive(false);
                 Debug.Log("GameOver panel assigned.");
-
+                gameOverPanel.SetActive(false);
                 restartButton = gameOverPanel.transform.Find("RestartButton").GetComponent<Button>();
                 if (restartButton)
                 {
@@ -71,12 +59,12 @@ public class GameManager : MonoBehaviour
                     restartButton.onClick.AddListener(() => OnRestartRequested());
                     Debug.Log("Restart button listener reattached.");
                 }
+                else
+                {
+                    Debug.LogError("Restart button not found.");
+                }
 
                 saveNameButton = gameOverPanel.transform.Find("SaveNameButton").GetComponent<Button>();
-                playerNameInput = gameOverPanel.transform.Find("PlayerNameInput").GetComponent<TMP_InputField>();
-                scoreText = gameOverPanel.transform.Find("FinalScoreText").GetComponent<TMP_Text>();
-                highScoreText = gameOverPanel.transform.Find("HighScores").GetComponent<TMP_Text>();
-
                 if (saveNameButton)
                 {
                     saveNameButton.onClick.RemoveAllListeners();
@@ -88,9 +76,22 @@ public class GameManager : MonoBehaviour
                     Debug.LogError("SaveNameButton not found.");
                 }
 
-                if (!playerNameInput || !saveNameButton || !scoreText || !highScoreText)
+                scoreText = gameOverPanel.transform.Find("FinalScoreText").GetComponent<TMP_Text>();
+                if (scoreText == null)
                 {
-                    Debug.LogError("UI components are not properly assigned.");
+                    Debug.LogError("FinalScoreText not found.");
+                }
+
+                playerNameInput = gameOverPanel.transform.Find("PlayerNameInput").GetComponent<TMP_InputField>();
+                if (playerNameInput == null)
+                {
+                    Debug.LogError("PlayerNameInput not found.");
+                }
+
+                highScoreText = gameOverPanel.transform.Find("HighScores").GetComponent<TMP_Text>();
+                if (highScoreText == null)
+                {
+                    Debug.LogError("HighScores not found.");
                 }
             }
             else
@@ -110,19 +111,6 @@ public class GameManager : MonoBehaviour
         {
             gameOverPanel.SetActive(true);
             DisplayScore();
-
-            bool isHighScore = highScoreManager.IsHighScore(ScoreManager.Instance.TotalScore);
-            if (isHighScore && !highScoreAdded)
-            {
-                playerNameInput.gameObject.SetActive(true);
-                saveNameButton.gameObject.SetActive(true);
-            }
-            else
-            {
-                playerNameInput.gameObject.SetActive(false);
-                saveNameButton.gameObject.SetActive(false);
-            }
-
             UpdateHighScoreDisplay();
             Debug.Log("GameOver: High score display updated.");
         }
@@ -131,39 +119,27 @@ public class GameManager : MonoBehaviour
     private void DisplayScore()
     {
         if (scoreText && ScoreManager.Instance)
-        {
             scoreText.text = "Final Score: " + ScoreManager.Instance.TotalScore.ToString();
-        }
         else
-        {
             Debug.LogError("Score Text component or ScoreManager is null.");
-        }
     }
 
     private void SavePlayerName()
     {
-        if (highScoreAdded) return;
-
         string playerName = string.IsNullOrEmpty(playerNameInput.text) ? "Player" : playerNameInput.text.Trim();
         highScoreManager.AddHighScore(playerName, ScoreManager.Instance.TotalScore);
-        playerNameInput.text = "";
-
-        highScoreAdded = true;
-        playerNameInput.gameObject.SetActive(false);
-        saveNameButton.gameObject.SetActive(false);
-        UpdateHighScoreDisplay();
-        Debug.Log($"Saved {playerName} with score {ScoreManager.Instance.TotalScore}");
+        playerNameInput.text = "";  // Clear input field after saving
+        UpdateHighScoreDisplay();  // Refresh high score display
     }
 
     private void ReloadScene()
     {
-        highScoreAdded = false;  // Reset high score added flag
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         if (ScoreManager.Instance)
         {
             ScoreManager.Instance.ResetScore();
         }
-        Debug.Log($"Scene reloaded and score reset. Scene: {SceneManager.GetActiveScene().name}");
+        Debug.Log("Scene reloaded and score reset.");
     }
 
     private void UpdateHighScoreDisplay()
