@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.058199853, g: 0.06394135, b: 0.15303919, a: 1}
+  m_IndirectSpecularColor: {r: 0.105906375, g: 0.10615527, b: 0.20792693, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3512,8 +3512,8 @@ MonoBehaviour:
   firstThresholdSkybox: {fileID: 2100000, guid: 42eaf2c5dbb13dc498f15df5a5b05fda, type: 2}
   secondThresholdSkybox: {fileID: 2100000, guid: 69e10e886d52d20478f9ed5424126be8, type: 2}
   defaultSkybox: {fileID: 2100000, guid: a4be220830e90ea4eb88b48b7fd376ce, type: 2}
-  firstScoreThreshold: 3000
-  secondScoreThreshold: 5000
+  firstScoreThreshold: 5000
+  secondScoreThreshold: 10000
 --- !u!4 &2076467065
 Transform:
   m_ObjectHideFlags: 0
