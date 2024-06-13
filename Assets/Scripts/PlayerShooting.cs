@@ -1,5 +1,4 @@
 using UnityEngine;
-using System.Collections;
 
 public class PlayerShooting : MonoBehaviour
 {
@@ -11,6 +10,7 @@ public class PlayerShooting : MonoBehaviour
     private float nextShootTime;
     private bool isDoubleFireRateActive = false;
     private bool isHomingActive = false;
+    private bool isShooting = false;
     private float homingMissileAngle = 0f;
 
     [SerializeField]
@@ -18,12 +18,39 @@ public class PlayerShooting : MonoBehaviour
     [SerializeField]
     private float homingMissileAngleNegative = -90f; // Angle for the second additional missile
 
+    private AudioManager audioManager;
+
+    void Start()
+    {
+        audioManager = AudioManager.Instance;
+        if (audioManager == null)
+        {
+            Debug.LogError("AudioManager instance not found.");
+        }
+    }
+
     void Update()
     {
-        if (Input.GetKey(shootKey) && Time.time > nextShootTime)
+        if (Input.GetKey(shootKey))
         {
-            ShootMissile();
-            nextShootTime = Time.time + (isDoubleFireRateActive ? shootingCooldown / 2 : shootingCooldown);
+            if (Time.time > nextShootTime)
+            {
+                ShootMissile();
+                nextShootTime = Time.time + (isDoubleFireRateActive ? shootingCooldown / 2 : shootingCooldown);
+            }
+            if (!isShooting)
+            {
+                isShooting = true;
+                audioManager?.PlayPlayerShootingSound();
+            }
+        }
+        else
+        {
+            if (isShooting)
+            {
+                isShooting = false;
+                audioManager?.StopPlayerShootingSound();
+            }
         }
     }
 
@@ -40,39 +67,27 @@ public class PlayerShooting : MonoBehaviour
 
     private void ShootMissile()
     {
-        // Original missile
         GameObject missileInstance = Instantiate(missilePrefab, transform.position, Quaternion.identity);
         SetupMissile(missileInstance);
 
         if (isHomingActive)
         {
-            // Calculate the initial direction based on the player's forward direction
-            Vector3 initialDirection = transform.forward;
-
-            // First additional missile with positive Y angle
-            GameObject missileInstancePositive = Instantiate(missilePrefab, transform.position, Quaternion.identity);
-            SetupMissile(missileInstancePositive);
-
-            // Modify the Y component of the velocity to add an angle globally
-            missileInstancePositive.GetComponent<Rigidbody>().velocity = Quaternion.Euler(0f, 0f, homingMissileAnglePositive) * initialDirection * missileSpeed;
-
-            // Keep Z coordinate at 0
-            Vector3 newPositionPositive = missileInstancePositive.transform.position;
-            newPositionPositive.z = 0f;
-            missileInstancePositive.transform.position = newPositionPositive;
-
-            // Second additional missile with negative Y angle
-            GameObject missileInstanceNegative = Instantiate(missilePrefab, transform.position, Quaternion.identity);
-            SetupMissile(missileInstanceNegative);
-
-            // Modify the Y component of the velocity to add a negative angle globally
-            missileInstanceNegative.GetComponent<Rigidbody>().velocity = Quaternion.Euler(0f, 0f, homingMissileAngleNegative) * initialDirection * missileSpeed;
-
-            // Keep Z coordinate at 0
-            Vector3 newPositionNegative = missileInstanceNegative.transform.position;
-            newPositionNegative.z = 0f;
-            missileInstanceNegative.transform.position = newPositionNegative;
+            SpawnHomingMissiles(transform.forward);
         }
+    }
+
+    private void SpawnHomingMissiles(Vector3 initialDirection)
+    {
+        SpawnMissileWithAngle(homingMissileAnglePositive, initialDirection);
+        SpawnMissileWithAngle(homingMissileAngleNegative, initialDirection);
+    }
+
+    private void SpawnMissileWithAngle(float angle, Vector3 direction)
+    {
+        GameObject missileInstance = Instantiate(missilePrefab, transform.position, Quaternion.identity);
+        SetupMissile(missileInstance);
+        missileInstance.GetComponent<Rigidbody>().velocity = Quaternion.Euler(0f, 0f, angle) * direction * missileSpeed;
+        missileInstance.transform.position = new Vector3(missileInstance.transform.position.x, missileInstance.transform.position.y, 0f);
     }
 
     private void SetupMissile(GameObject missile)

@@ -11,11 +11,15 @@ public class EnemyGun : MonoBehaviour
     private EnemyBehavior enemyBehavior; // Reference to the EnemyBehavior script
     private ShieldBehavior shield; // Reference to the ShieldBehavior script
 
+    private AudioManager audioManager;
+
     void Start()
     {
         nextFireTime = Time.time + fireRate;
         enemyBehavior = GetComponentInParent<EnemyBehavior>();
         shield = FindObjectOfType<ShieldBehavior>(); // Find the ShieldBehavior script in the scene
+
+        audioManager = AudioManager.Instance;
 
         if (enemyBehavior != null)
         {
@@ -40,6 +44,12 @@ public class EnemyGun : MonoBehaviour
     {
         if (missilePrefab != null)
         {
+            // Play the enemy shooting sound once per firing action
+            if (audioManager != null)
+            {
+                audioManager.PlayEnemyShootingSound();
+            }
+
             GameObject missile = Instantiate(missilePrefab, transform.position, Quaternion.identity);
 
             Rigidbody rb = missile.GetComponent<Rigidbody>();
