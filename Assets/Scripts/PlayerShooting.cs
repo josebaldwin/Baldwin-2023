@@ -10,7 +10,6 @@ public class PlayerShooting : MonoBehaviour
     private float nextShootTime;
     private bool isDoubleFireRateActive = false;
     private bool isHomingActive = false;
-    private bool isShooting = false;
     private float homingMissileAngle = 0f;
 
     [SerializeField]
@@ -23,33 +22,28 @@ public class PlayerShooting : MonoBehaviour
     void Start()
     {
         audioManager = AudioManager.Instance;
-        if (audioManager == null)
-        {
-            Debug.LogError("AudioManager instance not found.");
-        }
     }
 
     void Update()
     {
-        if (Input.GetKey(shootKey))
+        bool isShooting = Input.GetKey(shootKey) && Time.time > nextShootTime;
+
+        if (isShooting)
         {
-            if (Time.time > nextShootTime)
-            {
-                ShootMissile();
-                nextShootTime = Time.time + (isDoubleFireRateActive ? shootingCooldown / 2 : shootingCooldown);
-            }
-            if (!isShooting)
-            {
-                isShooting = true;
-                audioManager?.PlayPlayerShootingSound();
-            }
+            ShootMissile();
+            nextShootTime = Time.time + (isDoubleFireRateActive ? shootingCooldown / 2 : shootingCooldown);
         }
-        else
+
+        // Update the AudioManager with the current shooting status
+        if (audioManager != null)
         {
-            if (isShooting)
+            if (Input.GetKey(shootKey))
             {
-                isShooting = false;
-                audioManager?.StopPlayerShootingSound();
+                audioManager.PlayPlayerShootingSound(isDoubleFireRateActive);
+            }
+            else
+            {
+                audioManager.StopPlayerShootingSound();
             }
         }
     }

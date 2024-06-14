@@ -15,11 +15,12 @@ public class GameManager : MonoBehaviour
     public Button saveNameButton;
     public Button restartButton;
     public TMP_Text highScoreText;
+    public static bool isGameOver = false;
+
 
     public static event Action OnRestartRequested = delegate { };
 
     private bool highScoreAdded = false;
-    private EnemySpawner enemySpawner;
 
     void Awake()
     {
@@ -53,7 +54,6 @@ public class GameManager : MonoBehaviour
         {
             AssignUIComponents();
             highScoreAdded = false;
-            enemySpawner = FindObjectOfType<EnemySpawner>();
             Debug.Log($"GameManager OnSceneLoaded: UI components assigned. Scene: {scene.name}");
         }
     }
@@ -131,32 +131,12 @@ public class GameManager : MonoBehaviour
             UpdateHighScoreDisplay();
             Debug.Log("GameOver: High score display updated.");
 
-            // Stop player shooting sound
-            if (AudioManager.Instance != null)
-            {
-                AudioManager.Instance.StopPlayerShootingSound();
-                AudioManager.Instance.StopAllEnemyShootingSounds();
-            }
+            // Set the game over flag
+            isGameOver = true;
 
-            // Stop enemy spawning
-            if (enemySpawner != null)
-            {
-                enemySpawner.StopSpawning();
-            }
-
-            // Stop all enemy firing sounds
-            StopAllEnemyFiringSounds();
+            // Stop all enemy shooting sounds
+            AudioManager.Instance.StopAllEnemyShootingSounds();
         }
-    }
-
-    private void StopAllEnemyFiringSounds()
-    {
-        EnemyGun[] enemyGuns = FindObjectsOfType<EnemyGun>();
-        foreach (var enemyGun in enemyGuns)
-        {
-            enemyGun.StopEnemyFiringSound();
-        }
-        Debug.Log("All enemy firing sounds stopped.");
     }
 
     private void DisplayScore()
@@ -189,6 +169,7 @@ public class GameManager : MonoBehaviour
     private void ReloadScene()
     {
         highScoreAdded = false;  // Reset high score added flag
+        isGameOver = false; // Reset the game over flag
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         if (ScoreManager.Instance)
         {

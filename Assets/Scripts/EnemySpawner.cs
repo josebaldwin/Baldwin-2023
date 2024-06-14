@@ -9,7 +9,7 @@ public class EnemySpawner : MonoBehaviour
     public float maxY = 5f; // Max Y position for spawning
     private int enemiesDestroyed = 0; // Counter for the number of enemies destroyed
     private int thresholdForFasterSpawn = 10; // Threshold to increase spawn rate
-    private bool isSpawning = true;
+    private bool stopSpawning = false; // Flag to control spawning
 
     private void Start()
     {
@@ -19,7 +19,7 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
-        if (!isSpawning) return;
+        if (stopSpawning) return;
 
         // Calculate a random y position within the specified range
         float randomY = Random.Range(minY, maxY);
@@ -82,8 +82,7 @@ public class EnemySpawner : MonoBehaviour
 
     public void StopSpawning()
     {
-        isSpawning = false;
+        stopSpawning = true;
         CancelInvoke("SpawnEnemy");
-        Debug.Log("Enemy spawning stopped.");
     }
 }

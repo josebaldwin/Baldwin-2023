@@ -6,6 +6,7 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance { get; private set; }
 
     public AudioClip playerShootingSound; // Looping sound for player shooting
+    public AudioClip playerDoubleFireRateShootingSound; // Looping sound for double fire rate
     public AudioClip enemyShootingSound;  // One-shot sound for enemy shooting
     private AudioSource playerAudioSource;
     private List<AudioSource> enemyAudioSources = new List<AudioSource>();
@@ -37,13 +38,22 @@ public class AudioManager : MonoBehaviour
         }
     }
 
-    public void PlayPlayerShootingSound()
+    public void PlayPlayerShootingSound(bool isDoubleFireRate)
     {
-        if (!playerAudioSource.isPlaying)
+        AudioClip clipToPlay = isDoubleFireRate ? playerDoubleFireRateShootingSound : playerShootingSound;
+
+        if (playerAudioSource.clip != clipToPlay)
         {
-            playerAudioSource.clip = playerShootingSound;
+            playerAudioSource.Stop();
+            playerAudioSource.clip = clipToPlay;
             playerAudioSource.Play();
             Debug.Log("Player shooting sound started.");
+        }
+
+        if (!playerAudioSource.isPlaying)
+        {
+            playerAudioSource.Play();
+            Debug.Log("Player shooting sound resumed.");
         }
     }
 
