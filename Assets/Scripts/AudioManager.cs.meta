@@ -3,7 +3,9 @@ guid: 53eac848c845a784ebee5cbc23f7f578
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - playerShootingSound: {fileID: 8300000, guid: 87125399a941426429fb11b4d62e9181, type: 3}
+  - enemyShootingSound: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

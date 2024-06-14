@@ -9,6 +9,7 @@ public class EnemySpawner : MonoBehaviour
     public float maxY = 5f; // Max Y position for spawning
     private int enemiesDestroyed = 0; // Counter for the number of enemies destroyed
     private int thresholdForFasterSpawn = 10; // Threshold to increase spawn rate
+    private bool isSpawning = true;
 
     private void Start()
     {
@@ -18,6 +19,8 @@ public class EnemySpawner : MonoBehaviour
 
     private void SpawnEnemy()
     {
+        if (!isSpawning) return;
+
         // Calculate a random y position within the specified range
         float randomY = Random.Range(minY, maxY);
 
@@ -41,7 +44,6 @@ public class EnemySpawner : MonoBehaviour
         }
 
         SubscribeToEnemyDestruction(enemyInstance);
-
     }
 
     // Method to be called when an enemy is destroyed
@@ -68,6 +70,7 @@ public class EnemySpawner : MonoBehaviour
             Debug.Log("Spawn interval has reached its minimum limit.");
         }
     }
+
     private void SubscribeToEnemyDestruction(GameObject enemy)
     {
         EnemyExplosion explosionComponent = enemy.GetComponent<EnemyExplosion>();
@@ -75,5 +78,12 @@ public class EnemySpawner : MonoBehaviour
         {
             explosionComponent.OnKill += EnemyDestroyed;
         }
+    }
+
+    public void StopSpawning()
+    {
+        isSpawning = false;
+        CancelInvoke("SpawnEnemy");
+        Debug.Log("Enemy spawning stopped.");
     }
 }

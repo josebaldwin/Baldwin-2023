@@ -19,6 +19,7 @@ public class GameManager : MonoBehaviour
     public static event Action OnRestartRequested = delegate { };
 
     private bool highScoreAdded = false;
+    private EnemySpawner enemySpawner;
 
     void Awake()
     {
@@ -52,6 +53,7 @@ public class GameManager : MonoBehaviour
         {
             AssignUIComponents();
             highScoreAdded = false;
+            enemySpawner = FindObjectOfType<EnemySpawner>();
             Debug.Log($"GameManager OnSceneLoaded: UI components assigned. Scene: {scene.name}");
         }
     }
@@ -128,7 +130,33 @@ public class GameManager : MonoBehaviour
 
             UpdateHighScoreDisplay();
             Debug.Log("GameOver: High score display updated.");
+
+            // Stop player shooting sound
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.StopPlayerShootingSound();
+                AudioManager.Instance.StopAllEnemyShootingSounds();
+            }
+
+            // Stop enemy spawning
+            if (enemySpawner != null)
+            {
+                enemySpawner.StopSpawning();
+            }
+
+            // Stop all enemy firing sounds
+            StopAllEnemyFiringSounds();
         }
+    }
+
+    private void StopAllEnemyFiringSounds()
+    {
+        EnemyGun[] enemyGuns = FindObjectsOfType<EnemyGun>();
+        foreach (var enemyGun in enemyGuns)
+        {
+            enemyGun.StopEnemyFiringSound();
+        }
+        Debug.Log("All enemy firing sounds stopped.");
     }
 
     private void DisplayScore()

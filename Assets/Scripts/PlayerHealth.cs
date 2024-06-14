@@ -98,6 +98,12 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Player killed. Instantiating explosion and disabling player.");
         Instantiate(explosionParticlePrefab, transform.position, Quaternion.identity);
 
+        // Stop player shooting sound
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.StopPlayerShootingSound();
+        }
+
         // Instead of destroying, just disable the player GameObject.
         gameObject.SetActive(false);
 

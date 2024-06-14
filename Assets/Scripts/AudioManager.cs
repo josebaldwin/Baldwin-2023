@@ -69,4 +69,16 @@ public class AudioManager : MonoBehaviour
         }
         Debug.Log("All enemy audio sources are busy.");
     }
+
+    public void StopAllEnemyShootingSounds()
+    {
+        foreach (var audioSource in enemyAudioSources)
+        {
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
+        }
+        Debug.Log("All enemy shooting sounds stopped.");
+    }
 }

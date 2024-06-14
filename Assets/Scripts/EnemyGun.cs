@@ -12,6 +12,7 @@ public class EnemyGun : MonoBehaviour
     private ShieldBehavior shield; // Reference to the ShieldBehavior script
 
     private AudioManager audioManager;
+    private bool isGameOver = false;
 
     void Start()
     {
@@ -33,6 +34,8 @@ public class EnemyGun : MonoBehaviour
 
     void Update()
     {
+        if (isGameOver) return;
+
         if (Time.time >= nextFireTime && !enemyBehavior.isResistanceDepleted)
         {
             FireMissile();
@@ -78,5 +81,10 @@ public class EnemyGun : MonoBehaviour
             missile.transform.position = new Vector3(missile.transform.position.x, missile.transform.position.y, correctedZ);
             yield return null;
         }
+    }
+
+    public void StopEnemyFiringSound()
+    {
+        isGameOver = true;
     }
 }
