@@ -6,10 +6,12 @@ public class AudioManager : MonoBehaviour
     public static AudioManager Instance { get; private set; }
 
     public AudioClip playerShootingSound; // Looping sound for player shooting
-    public AudioClip playerDoubleFireRateShootingSound; // Looping sound for double fire rate
+    public AudioClip playerDoubleFireRateSound; // Looping sound for player double fire rate
     public AudioClip enemyShootingSound;  // One-shot sound for enemy shooting
+    public AudioClip buttonClickSound;    // One-shot sound for button click
     private AudioSource playerAudioSource;
     private List<AudioSource> enemyAudioSources = new List<AudioSource>();
+    private AudioSource buttonAudioSource;
     private int maxEnemyAudioSources = 10; // Max number of enemy shooting sounds playing at the same time
 
     void Awake()
@@ -36,12 +38,13 @@ public class AudioManager : MonoBehaviour
             AudioSource enemyAudioSource = gameObject.AddComponent<AudioSource>();
             enemyAudioSources.Add(enemyAudioSource);
         }
+
+        buttonAudioSource = gameObject.AddComponent<AudioSource>();
     }
 
     public void PlayPlayerShootingSound(bool isDoubleFireRate)
     {
-        AudioClip clipToPlay = isDoubleFireRate ? playerDoubleFireRateShootingSound : playerShootingSound;
-
+        AudioClip clipToPlay = isDoubleFireRate ? playerDoubleFireRateSound : playerShootingSound;
         if (playerAudioSource.clip != clipToPlay)
         {
             playerAudioSource.Stop();
@@ -49,8 +52,7 @@ public class AudioManager : MonoBehaviour
             playerAudioSource.Play();
             Debug.Log("Player shooting sound started.");
         }
-
-        if (!playerAudioSource.isPlaying)
+        else if (!playerAudioSource.isPlaying)
         {
             playerAudioSource.Play();
             Debug.Log("Player shooting sound resumed.");
@@ -89,6 +91,14 @@ public class AudioManager : MonoBehaviour
                 audioSource.Stop();
             }
         }
-        Debug.Log("All enemy shooting sounds stopped.");
+    }
+
+    public void PlayButtonClickSound()
+    {
+        if (buttonClickSound != null)
+        {
+            buttonAudioSource.PlayOneShot(buttonClickSound);
+            Debug.Log("Button click sound played.");
+        }
     }
 }

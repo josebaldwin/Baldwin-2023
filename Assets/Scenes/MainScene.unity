@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.17133173, g: 0.16232762, b: 0.2942236, a: 1}
+  m_IndirectSpecularColor: {r: 0.098484226, g: 0.09404891, b: 0.19867668, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -685,8 +685,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53eac848c845a784ebee5cbc23f7f578, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolSize: 10
-  shootingSound: {fileID: 8300000, guid: 60a0682fbc82bd244bdae3f3445cfd17, type: 3}
+  playerShootingSound: {fileID: 8300000, guid: 87125399a941426429fb11b4d62e9181, type: 3}
+  playerDoubleFireRateSound: {fileID: 8300000, guid: cac5a8ca4f82afa438a3e143ab16ef09, type: 3}
+  enemyShootingSound: {fileID: 8300000, guid: 16c25250151e04a37b489a3f056c8314, type: 3}
+  buttonClickSound: {fileID: 8300000, guid: 80d3799791748ac42b3ec097c17a2383, type: 3}
 --- !u!4 &685882287
 Transform:
   m_ObjectHideFlags: 0
@@ -716,7 +718,7 @@ AudioSource:
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -1222,6 +1224,18 @@ MonoBehaviour:
       - m_Target: {fileID: 586189517}
         m_TargetAssemblyTypeName: SceneLoader, Assembly-CSharp
         m_MethodName: LoadMenuScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 685882286}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayButtonClickSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2226,6 +2240,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 685882286}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayButtonClickSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1267457714
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2432,6 +2458,18 @@ MonoBehaviour:
       - m_Target: {fileID: 2076467066}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: ReloadScene
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 685882286}
+        m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
+        m_MethodName: PlayButtonClickSound
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3690,6 +3728,7 @@ MonoBehaviour:
   playerNameInput: {fileID: 1768742496}
   saveNameButton: {fileID: 1267457713}
   restartButton: {fileID: 1415965864}
+  menuButton: {fileID: 0}
   highScoreText: {fileID: 1058141775}
 --- !u!114 &2076467067
 MonoBehaviour:

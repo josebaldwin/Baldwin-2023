@@ -26,6 +26,15 @@ public class PlayerShooting : MonoBehaviour
 
     void Update()
     {
+        if (GameManager.isGameOver) // Ensure shooting stops when the game is over
+        {
+            if (audioManager != null)
+            {
+                audioManager.StopPlayerShootingSound();
+            }
+            return;
+        }
+
         bool isShooting = Input.GetKey(shootKey) && Time.time > nextShootTime;
 
         if (isShooting)

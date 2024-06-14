@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
+    public static bool isGameOver = false;
 
     public HighScoreManager highScoreManager;
     public GameObject gameOverPanel;
@@ -14,9 +15,8 @@ public class GameManager : MonoBehaviour
     public TMP_InputField playerNameInput;
     public Button saveNameButton;
     public Button restartButton;
+    public Button menuButton; // Assuming you have a menu button on the GameOver screen
     public TMP_Text highScoreText;
-    public static bool isGameOver = false;
-
 
     public static event Action OnRestartRequested = delegate { };
 
@@ -73,7 +73,10 @@ public class GameManager : MonoBehaviour
                 if (restartButton)
                 {
                     restartButton.onClick.RemoveAllListeners();
-                    restartButton.onClick.AddListener(() => OnRestartRequested());
+                    restartButton.onClick.AddListener(() => {
+                        PlayButtonClickSound();
+                        OnRestartRequested();
+                    });
                     Debug.Log("Restart button listener reattached.");
                 }
 
@@ -85,12 +88,27 @@ public class GameManager : MonoBehaviour
                 if (saveNameButton)
                 {
                     saveNameButton.onClick.RemoveAllListeners();
-                    saveNameButton.onClick.AddListener(SavePlayerName);
+                    saveNameButton.onClick.AddListener(() => {
+                        PlayButtonClickSound();
+                        SavePlayerName();
+                    });
                     Debug.Log("SaveNameButton listener reattached.");
                 }
                 else
                 {
                     Debug.LogError("SaveNameButton not found.");
+                }
+
+                // Assuming you have a menu button on the GameOver screen
+                menuButton = gameOverPanel.transform.Find("MenuButton")?.GetComponent<Button>();
+                if (menuButton)
+                {
+                    menuButton.onClick.RemoveAllListeners();
+                    menuButton.onClick.AddListener(() => {
+                        PlayButtonClickSound();
+                        // Your logic to go back to the menu
+                    });
+                    Debug.Log("Menu button listener reattached.");
                 }
 
                 if (!playerNameInput || !saveNameButton || !scoreText || !highScoreText)
@@ -113,6 +131,7 @@ public class GameManager : MonoBehaviour
     {
         if (gameOverPanel)
         {
+            isGameOver = true; // Set the game over flag to true
             gameOverPanel.SetActive(true);
             DisplayScore();
 
@@ -130,9 +149,6 @@ public class GameManager : MonoBehaviour
 
             UpdateHighScoreDisplay();
             Debug.Log("GameOver: High score display updated.");
-
-            // Set the game over flag
-            isGameOver = true;
 
             // Stop all enemy shooting sounds
             AudioManager.Instance.StopAllEnemyShootingSounds();
@@ -192,6 +208,14 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.LogError("High Score Text component is not found.");
+        }
+    }
+
+    private void PlayButtonClickSound()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayButtonClickSound();
         }
     }
 }
