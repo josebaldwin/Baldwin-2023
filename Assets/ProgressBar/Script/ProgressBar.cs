@@ -3,12 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-
 [ExecuteInEditMode]
-
 public class ProgressBar : MonoBehaviour
 {
-
     [Header("Title Setting")]
     public string Title;
     public Color TitleColor;
@@ -16,7 +13,7 @@ public class ProgressBar : MonoBehaviour
     public int TitleFontSize = 10;
 
     [Header("Bar Setting")]
-    public Color BarColor;   
+    public Color BarColor;
     public Color BarBackGroundColor;
     public Sprite BarBackGroundSprite;
     [Range(1f, 100f)]
@@ -27,6 +24,7 @@ public class ProgressBar : MonoBehaviour
     public AudioClip sound;
     public bool repeat = false;
     public float RepeatRate = 1f;
+    public bool enableSound = true; // Add this flag to enable/disable sound
 
     private Image bar, barBackground;
     private float nextPlay;
@@ -36,17 +34,13 @@ public class ProgressBar : MonoBehaviour
     public float BarValue
     {
         get { return barValue; }
-
         set
         {
             value = Mathf.Clamp(value, 0, 100);
             barValue = value;
             UpdateValue(barValue);
-
         }
     }
-
-        
 
     private void Awake()
     {
@@ -65,12 +59,10 @@ public class ProgressBar : MonoBehaviour
         txtTitle.fontSize = TitleFontSize;
 
         bar.color = BarColor;
-        barBackground.color = BarBackGroundColor; 
+        barBackground.color = BarBackGroundColor;
         barBackground.sprite = BarBackGroundSprite;
 
         UpdateValue(barValue);
-
-
     }
 
     void UpdateValue(float val)
@@ -86,14 +78,12 @@ public class ProgressBar : MonoBehaviour
         {
             bar.color = BarColor;
         }
-
     }
-
 
     private void Update()
     {
         if (!Application.isPlaying)
-        {           
+        {
             UpdateValue(50);
             txtTitle.color = TitleColor;
             txtTitle.font = TitleFont;
@@ -101,17 +91,15 @@ public class ProgressBar : MonoBehaviour
 
             bar.color = BarColor;
             barBackground.color = BarBackGroundColor;
-
-            barBackground.sprite = BarBackGroundSprite;           
+            barBackground.sprite = BarBackGroundSprite;
         }
         else
         {
-            if (Alert >= barValue && Time.time > nextPlay)
+            if (enableSound && Alert >= barValue && Time.time > nextPlay)
             {
                 nextPlay = Time.time + RepeatRate;
                 audiosource.PlayOneShot(sound);
             }
         }
     }
-
 }
