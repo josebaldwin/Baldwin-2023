@@ -6,11 +6,13 @@ public class PowersUpManager : MonoBehaviour
     public GameObject shieldPrefab; // Assign the shield prefab in the inspector
     public float doubleFireRateDuration = 15f; // Duration for double fire rate
     public float homingDuration = 15f; // Duration for homing power-up (changed to 15 seconds)
+    public AudioClip powerUpSound; // Assign the power-up sound in the inspector
 
     private PlayerShooting[] playerShootings; // Array to hold multiple PlayerShooting instances
     private GameObject shieldInstance; // Reference to the spawned shield instance
     private ProgressBar shieldHealthBar; // Reference to the shield health bar
     private float shieldHealth = 100f; // Initial shield health
+    private AudioSource audioSource; // Reference to the AudioSource component
 
     private Coroutine doubleFireRateCoroutine;
     private Coroutine homingCoroutine;
@@ -33,6 +35,12 @@ public class PowersUpManager : MonoBehaviour
             this.enabled = false;
             return;
         }
+
+        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+        {
+            audioSource = gameObject.AddComponent<AudioSource>();
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -52,7 +60,17 @@ public class PowersUpManager : MonoBehaviour
                 ActivateHomingMissile();
                 break;
         }
+
+        PlayPowerUpSound();
         Destroy(other.gameObject); // Destroy the power-up immediately
+    }
+
+    private void PlayPowerUpSound()
+    {
+        if (powerUpSound != null && audioSource != null)
+        {
+            audioSource.PlayOneShot(powerUpSound);
+        }
     }
 
     private void ActivateShield()

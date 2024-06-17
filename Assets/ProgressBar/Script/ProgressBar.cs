@@ -70,7 +70,7 @@ public class ProgressBar : MonoBehaviour
         bar.fillAmount = val / 100;
         txtTitle.text = Title + " " + val + "%";
 
-        if (Alert >= val)
+        if (Alert >= val && val > 0)
         {
             bar.color = BarAlertColor;
         }
@@ -95,10 +95,15 @@ public class ProgressBar : MonoBehaviour
         }
         else
         {
-            if (enableSound && Alert >= barValue && Time.time > nextPlay)
+            if (enableSound && barValue > 0 && Alert >= barValue && Time.time > nextPlay)
             {
                 nextPlay = Time.time + RepeatRate;
                 audiosource.PlayOneShot(sound);
+            }
+            else if (barValue == 0 || Alert < barValue)
+            {
+                // Stop the sound if the Alert is no longer active or if the barValue is 0
+                audiosource.Stop();
             }
         }
     }
