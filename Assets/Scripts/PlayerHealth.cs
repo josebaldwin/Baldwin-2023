@@ -98,9 +98,10 @@ public class PlayerHealth : MonoBehaviour
         Debug.Log("Player killed. Instantiating explosion and disabling player.");
         Instantiate(explosionParticlePrefab, transform.position, Quaternion.identity);
 
-        // Stop player shooting sound
+        // Play player explosion sound
         if (AudioManager.Instance != null)
         {
+            AudioManager.Instance.PlayPlayerExplosionSound();
             AudioManager.Instance.StopPlayerShootingSound();
         }
 

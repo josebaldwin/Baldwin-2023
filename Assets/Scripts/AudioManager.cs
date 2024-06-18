@@ -9,9 +9,11 @@ public class AudioManager : MonoBehaviour
     public AudioClip playerDoubleFireRateSound; // Looping sound for player double fire rate
     public AudioClip enemyShootingSound;  // One-shot sound for enemy shooting
     public AudioClip buttonClickSound;    // One-shot sound for button click
+    public AudioClip playerExplosionSound; // Sound for player explosion
     private AudioSource playerAudioSource;
     private List<AudioSource> enemyAudioSources = new List<AudioSource>();
     private AudioSource buttonAudioSource;
+    private AudioSource explosionAudioSource;
     private int maxEnemyAudioSources = 10; // Max number of enemy shooting sounds playing at the same time
 
     void Awake()
@@ -40,6 +42,7 @@ public class AudioManager : MonoBehaviour
         }
 
         buttonAudioSource = gameObject.AddComponent<AudioSource>();
+        explosionAudioSource = gameObject.AddComponent<AudioSource>();
     }
 
     public void PlayPlayerShootingSound(bool isDoubleFireRate)
@@ -99,6 +102,15 @@ public class AudioManager : MonoBehaviour
         {
             buttonAudioSource.PlayOneShot(buttonClickSound);
             Debug.Log("Button click sound played.");
+        }
+    }
+
+    public void PlayPlayerExplosionSound()
+    {
+        if (playerExplosionSound != null)
+        {
+            explosionAudioSource.PlayOneShot(playerExplosionSound);
+            Debug.Log("Player explosion sound played.");
         }
     }
 }
