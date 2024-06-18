@@ -10,11 +10,14 @@ public class AudioManager : MonoBehaviour
     public AudioClip enemyShootingSound;  // One-shot sound for enemy shooting
     public AudioClip buttonClickSound;    // One-shot sound for button click
     public AudioClip playerExplosionSound; // Sound for player explosion
+    public AudioClip enemyExplosionSound; // Sound for enemy explosion
     private AudioSource playerAudioSource;
     private List<AudioSource> enemyAudioSources = new List<AudioSource>();
+    private List<AudioSource> enemyExplosionSources = new List<AudioSource>();
     private AudioSource buttonAudioSource;
     private AudioSource explosionAudioSource;
     private int maxEnemyAudioSources = 10; // Max number of enemy shooting sounds playing at the same time
+    private int maxEnemyExplosionSources = 10; // Max number of enemy explosion sounds playing at the same time
 
     void Awake()
     {
@@ -39,6 +42,12 @@ public class AudioManager : MonoBehaviour
         {
             AudioSource enemyAudioSource = gameObject.AddComponent<AudioSource>();
             enemyAudioSources.Add(enemyAudioSource);
+        }
+
+        for (int i = 0; i < maxEnemyExplosionSources; i++)
+        {
+            AudioSource enemyExplosionSource = gameObject.AddComponent<AudioSource>();
+            enemyExplosionSources.Add(enemyExplosionSource);
         }
 
         buttonAudioSource = gameObject.AddComponent<AudioSource>();
@@ -112,5 +121,19 @@ public class AudioManager : MonoBehaviour
             explosionAudioSource.PlayOneShot(playerExplosionSound);
             Debug.Log("Player explosion sound played.");
         }
+    }
+
+    public void PlayEnemyExplosionSound()
+    {
+        foreach (var audioSource in enemyExplosionSources)
+        {
+            if (!audioSource.isPlaying)
+            {
+                audioSource.PlayOneShot(enemyExplosionSound);
+                Debug.Log("Enemy explosion sound played.");
+                return;
+            }
+        }
+        Debug.Log("All enemy explosion audio sources are busy.");
     }
 }

@@ -11,7 +11,7 @@ public class EnemyExplosion : MonoBehaviour
     // Method to be called when resistance is depleted
     public void StartDestructionSequence()
     {
-        StartCoroutine(DelayedOnKill(2f)); // Wait for 3 seconds before calling OnKill
+        StartCoroutine(DelayedOnKill(2f)); // Wait for 2 seconds before calling OnKill
     }
 
     private IEnumerator DelayedOnKill(float delay)
@@ -27,6 +27,7 @@ public class EnemyExplosion : MonoBehaviour
 
         OnKill?.Invoke(); // Invoke the OnKill event
         PlayExplosionParticle();
+        PlayExplosionSound();
         Destroy(gameObject); // Destroy the enemy GameObject
     }
 
@@ -40,6 +41,14 @@ public class EnemyExplosion : MonoBehaviour
         else
         {
             Debug.LogError("Explosion prefab not assigned for " + gameObject.name);
+        }
+    }
+
+    private void PlayExplosionSound()
+    {
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayEnemyExplosionSound();
         }
     }
 }

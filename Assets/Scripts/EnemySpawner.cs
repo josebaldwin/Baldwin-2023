@@ -85,4 +85,10 @@ public class EnemySpawner : MonoBehaviour
         stopSpawning = true;
         CancelInvoke("SpawnEnemy");
     }
+
+    public void StartSpawning()
+    {
+        stopSpawning = false;
+        InvokeRepeating("SpawnEnemy", 0f, spawnInterval);
+    }
 }

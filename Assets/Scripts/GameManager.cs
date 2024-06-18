@@ -55,6 +55,13 @@ public class GameManager : MonoBehaviour
             AssignUIComponents();
             highScoreAdded = false;
             Debug.Log($"GameManager OnSceneLoaded: UI components assigned. Scene: {scene.name}");
+
+            // Restart enemy spawning
+            EnemySpawner enemySpawner = FindObjectOfType<EnemySpawner>();
+            if (enemySpawner != null)
+            {
+                enemySpawner.StartSpawning();
+            }
         }
     }
 
@@ -152,6 +159,13 @@ public class GameManager : MonoBehaviour
 
             // Stop all enemy shooting sounds
             AudioManager.Instance.StopAllEnemyShootingSounds();
+
+            // Stop enemy spawning
+            EnemySpawner enemySpawner = FindObjectOfType<EnemySpawner>();
+            if (enemySpawner != null)
+            {
+                enemySpawner.StopSpawning();
+            }
         }
     }
 
