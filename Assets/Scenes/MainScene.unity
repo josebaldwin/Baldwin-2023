@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.098484226, g: 0.09404891, b: 0.19867668, a: 1}
+  m_IndirectSpecularColor: {r: 0.058578968, g: 0.064293, b: 0.15338379, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -689,6 +689,8 @@ MonoBehaviour:
   playerDoubleFireRateSound: {fileID: 8300000, guid: cac5a8ca4f82afa438a3e143ab16ef09, type: 3}
   enemyShootingSound: {fileID: 8300000, guid: 16c25250151e04a37b489a3f056c8314, type: 3}
   buttonClickSound: {fileID: 8300000, guid: 80d3799791748ac42b3ec097c17a2383, type: 3}
+  playerExplosionSound: {fileID: 8300000, guid: bca37a64604704def8659e7c2769936d, type: 3}
+  enemyExplosionSound: {fileID: 8300000, guid: dce0fc50c98b24282867ddc791aa869d, type: 3}
 --- !u!4 &685882287
 Transform:
   m_ObjectHideFlags: 0
@@ -1426,13 +1428,29 @@ PrefabInstance:
       value: 0.4641509
       objectReference: {fileID: 0}
     - target: {fileID: 114769781544105922, guid: 5eefba205a58c8c4a937c97b87c185a3, type: 3}
+      propertyPath: Alert
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114769781544105922, guid: 5eefba205a58c8c4a937c97b87c185a3, type: 3}
       propertyPath: Title
       value: Ship Health
+      objectReference: {fileID: 0}
+    - target: {fileID: 114769781544105922, guid: 5eefba205a58c8c4a937c97b87c185a3, type: 3}
+      propertyPath: sound
+      value: 
+      objectReference: {fileID: 8300000, guid: 792a6e132d38a4f70bbae7f091a6cab3, type: 3}
+    - target: {fileID: 114769781544105922, guid: 5eefba205a58c8c4a937c97b87c185a3, type: 3}
+      propertyPath: repeat
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114769781544105922, guid: 5eefba205a58c8c4a937c97b87c185a3, type: 3}
       propertyPath: TitleFont
       value: 
       objectReference: {fileID: 12800000, guid: c9f6d0e7bc8541498c9a4799ba184ede, type: 3}
+    - target: {fileID: 114769781544105922, guid: 5eefba205a58c8c4a937c97b87c185a3, type: 3}
+      propertyPath: RepeatRate
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 114769781544105922, guid: 5eefba205a58c8c4a937c97b87c185a3, type: 3}
       propertyPath: TitleFontSize
       value: 40
@@ -1838,8 +1856,20 @@ PrefabInstance:
       value: 0.14500809
       objectReference: {fileID: 0}
     - target: {fileID: 114769781544105922, guid: 5eefba205a58c8c4a937c97b87c185a3, type: 3}
+      propertyPath: Alert
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 114769781544105922, guid: 5eefba205a58c8c4a937c97b87c185a3, type: 3}
       propertyPath: Title
       value: Shield Health
+      objectReference: {fileID: 0}
+    - target: {fileID: 114769781544105922, guid: 5eefba205a58c8c4a937c97b87c185a3, type: 3}
+      propertyPath: sound
+      value: 
+      objectReference: {fileID: 8300000, guid: f10e7ff812627164fa39911459400577, type: 3}
+    - target: {fileID: 114769781544105922, guid: 5eefba205a58c8c4a937c97b87c185a3, type: 3}
+      propertyPath: repeat
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114769781544105922, guid: 5eefba205a58c8c4a937c97b87c185a3, type: 3}
       propertyPath: TitleFont
@@ -1856,6 +1886,14 @@ PrefabInstance:
     - target: {fileID: 114769781544105922, guid: 5eefba205a58c8c4a937c97b87c185a3, type: 3}
       propertyPath: BarColor.r
       value: 0.14500809
+      objectReference: {fileID: 0}
+    - target: {fileID: 114769781544105922, guid: 5eefba205a58c8c4a937c97b87c185a3, type: 3}
+      propertyPath: RepeatRate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114769781544105922, guid: 5eefba205a58c8c4a937c97b87c185a3, type: 3}
+      propertyPath: enableSound
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114769781544105922, guid: 5eefba205a58c8c4a937c97b87c185a3, type: 3}
       propertyPath: BarBackGroundColor.b
@@ -3102,6 +3140,7 @@ MonoBehaviour:
   shieldPrefab: {fileID: 4956022417371818869, guid: c8718a02981a87f46b5ba184e5193046, type: 3}
   doubleFireRateDuration: 25
   homingDuration: 15
+  powerUpSound: {fileID: 8300000, guid: 27fd630d6199d4ef994265f301a8d53d, type: 3}
 --- !u!114 &1568936303
 MonoBehaviour:
   m_ObjectHideFlags: 0

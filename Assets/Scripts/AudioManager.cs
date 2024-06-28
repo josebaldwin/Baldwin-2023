@@ -24,11 +24,12 @@ public class AudioManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);
+            DontDestroyOnLoad(gameObject); // Ensure this object persists across scenes
             InitializeAudioSources();
         }
         else
         {
+            Debug.Log("AudioManager Instance already exists, destroying this duplicate.");
             Destroy(gameObject);
         }
     }
